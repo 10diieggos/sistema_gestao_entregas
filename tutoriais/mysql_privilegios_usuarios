@@ -1,0 +1,8 @@
+$ docker-compose exec db bash
+# mysql -u root -p
+Enter password: root
+
+mysql> CREATE DATABASE mydatabase;
+mysql> GRANT ALL PRIVILEGES ON mydatabase.* TO 'myuser'@'%';
+mysql> FLUSH PRIVILEGES;
+mysql> EXIT;

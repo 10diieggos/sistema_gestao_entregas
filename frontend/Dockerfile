@@ -2,11 +2,10 @@ FROM node:18.12.0
 
 WORKDIR /app
 
-COPY package.json /app/
-COPY package-lock.json /app/
-RUN npm install --global npm@8.19.2
+COPY app/package.json /app/
+COPY app/package-lock.json /app/
 RUN npm install
 
-COPY . /app/
+COPY ./app /app/
 
 CMD ["npm", "start"]

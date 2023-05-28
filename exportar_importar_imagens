@@ -1,0 +1,5 @@
+mkdir docker-images
+for /f "tokens=1,2 delims=:" %i in ('docker image ls --format "{{.Repository}}:{{.Tag}}"') do docker save -o docker-images/%i_%j.tar %i:%j
+
+
+for %i in (C:\caminho\para\as\imagens\exportadas\*.tar) do docker load -i %i

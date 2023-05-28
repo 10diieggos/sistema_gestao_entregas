@@ -4,9 +4,11 @@ services:
   db:
     image: mysql:8
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: user_mysql
+      MYSQL_PASSWORD: ${MYSQL_USER}
     volumes:
-      - db_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
@@ -26,8 +28,9 @@ services:
 
   frontend:
     build: ./frontend
+    command: npm start
     volumes:
-      - ./frontend:/app
+      - ./frontend/app:/app
     ports:
       - "3000:3000"
     networks:
@@ -44,7 +47,8 @@ services:
       - backend_network
 
 volumes:
-  db_data:
+  mysql_data:
+    external: true
 
 networks:
   frontend_network:

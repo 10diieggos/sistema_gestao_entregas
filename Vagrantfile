@@ -5,6 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 8080, host: 8184 # phpmyadmin
   config.vm.network "forwarded_port", guest: 8000, host: 8185 # backend
   config.vm.network "forwarded_port", guest: 3306, host: 8186 # MariaDB
+  config.vm.synced_folder "C:/Users/richl/OneDrive/onedrive/Documentos/MeusProjetos/sistema_gestao_entregas", "/sistema_gestao_entregas"
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
     sudo apt-get install -y docker.io

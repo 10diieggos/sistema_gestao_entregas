@@ -1,0 +1,239 @@
+```
+ERROR
+array.sort is not a function
+TypeError: array.sort is not a function
+    at TASK (http://localhost:3000/static/js/bundle.js:426:28)
+    at http://localhost:3000/static/js/bundle.js:55171:18
+    at http://localhost:3000/static/js/bundle.js:55172:15
+    at http://localhost:3000/static/js/bundle.js:55174:20
+    at Array.reduce (<anonymous>)
+    at Object.sortFn (http://localhost:3000/static/js/bundle.js:55172:19)
+    at Object.modifier (http://localhost:3000/static/js/bundle.js:55195:35)
+    at http://localhost:3000/static/js/bundle.js:54854:22
+    at http://localhost:3000/static/js/bundle.js:54516:9
+    at renderWithHooks (http://localhost:3000/static/js/bundle.js:29308:22)
+```
+
+src\App.js
+```
+import * as React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+// import EnhancedTable from './componentes/EnhancedTable/EnhancedTable';
+// import DataTable from './componentes/DataTable/DataTable';
+// import TableMantineShowrell from './componentes/TableMantineShowrell';
+import GettingStarted from './componentes/ReactTableLibrary/GettingStarted';
+import Base from './componentes/ReactTableLibrary/Base';
+import StoriesTheme from './componentes/ReactTableLibrary/StoriesTheme';
+import LayoutTable from './componentes/ReactTableLibrary/LayoutTable';
+import Component from './componentes/ReactTableLibrary/Component';
+
+
+function App() {
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <div className="App">
+        {/* <h2>Getting Started</h2>
+        <GettingStarted />
+        <h2>Base</h2>
+        <Base />
+        <h2>Stories Theme</h2>
+        <StoriesTheme />
+        <h2>Layout</h2>
+        <LayoutTable /> */}
+        <h2>Sort Table</h2>
+        <Component />
+      </div>
+    </React.Fragment>
+  );
+}
+
+export default App;
+
+
+```
+
+src\componentes\ReactTableLibrary\Component\index.js
+```
+import Component from './Component.js';
+export default Component
+```
+
+src\componentes\ReactTableLibrary\Component\Component.js
+```
+import * as React from "react";
+import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined";
+import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import { createTheme as createMaterialTheme } from "@mui/material/styles";
+import { ThemeProvider as MaterialThemeProvider } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+
+import {
+  Table,
+  Header,
+  HeaderRow,
+  Body,
+  Row,
+  HeaderCell,
+  Cell,
+} from "@table-library/react-table-library/table";
+import {
+  useSort,
+  HeaderCellSort,
+  SortIconPositions,
+  SortToggleType,
+} from "@table-library/react-table-library/sort";
+
+import nodes from "../data";
+
+const Component = () => {
+  const data = { nodes };
+
+  const sort = useSort(
+    data,
+    {
+      state: {
+        sortKey: "TASK",
+        reverse: true,
+      },
+      onChange: onSortChange,
+    },
+    {
+      sortFns: {
+        TASK: (array) =>
+          array.sort((a, b) =>
+            (a.nodes?.length || 0) > 0 && (b.nodes?.length || 0) > 0
+              ? a.nodes[0].name.localeCompare(b.nodes[0].name)
+              : a.name.localeCompare(b.name)
+          ),
+        DEADLINE: (array) =>
+          array.sort((a, b) => a.deadline - b.deadline),
+        TYPE: (array) => array.sort((a, b) => a.type.localeCompare(b.type)),
+        COMPLETE: (array) =>
+          array.sort((a, b) => a.isComplete - b.isComplete),
+        TASKS: (array) =>
+          array.sort(
+            (a, b) => (a.nodes?.length || 0) - (b.nodes?.length || 0)
+          ),
+      },
+    }
+  );
+
+  function onSortChange(action, state) {
+    console.log(action, state);
+  }
+
+  return (
+    <Table data={data} sort={sort}>
+      {(tableList) => (
+        <>
+          <Header>
+            <HeaderRow>
+              <HeaderCellSort sortKey="TASK">Task</HeaderCellSort>
+              <HeaderCellSort sortKey="DEADLINE">Deadline</HeaderCellSort>
+              <HeaderCellSort sortKey="TYPE">Type</HeaderCellSort>
+              <HeaderCellSort sortKey="COMPLETE">Complete</HeaderCellSort>
+              <HeaderCellSort sortKey="TASKS">Tasks</HeaderCellSort>
+            </HeaderRow>
+          </Header>
+
+          <Body>
+            {tableList.map((item) => (
+              <Row item={item} key={item.id}>
+                <Cell>{item.name}</Cell>
+                <Cell>
+                  {item.deadline.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                  })}
+                </Cell>
+                <Cell>{item.type}</Cell>
+                <Cell>{item.isComplete.toString()}</Cell>
+                <Cell>{item.nodes?.length}</Cell>
+              </Row>
+            ))}
+          </Body>
+        </>
+      )}
+    </Table>
+  );
+};
+
+export default Component;
+```
+
+src\componentes\ReactTableLibrary\data.js
+```
+
+const nodes = [
+  {
+    id: '0',
+    name: 'Shopping List',
+    deadline: new Date(2020, 1, 15),
+    type: 'TASK',
+    isComplete: true,
+    nodes: 3,
+  },
+  {
+    id: '1',
+    name: 'Operating System',
+    deadline: new Date(2020, 2, 15),
+    type: 'SETUP',
+    isComplete: true,
+    nodes: 2,
+  },
+  {
+    id: '2',
+    name: 'VSCode',
+    deadline: new Date(2020, 2, 17),
+    type: 'SETUP',
+    isComplete: true,
+    nodes: 0,
+  },
+  {
+    id: '3',
+    name: 'JavaScript',
+    deadline: new Date(2020, 3, 28),
+    type: 'LEARN',
+    isComplete: true,
+    nodes: 3,
+  },
+  {
+    id: '4',
+    name: 'React',
+    deadline: new Date(2020, 4, 8),
+    type: 'LEARN',
+    isComplete: false,
+    nodes: 5,
+  },
+  {
+    id: '5',
+    name: 'Git',
+    deadline: new Date(2020, 5, 28),
+    type: 'SETUP',
+    isComplete: false,
+    nodes: 0,
+  },
+  {
+    id: '6',
+    name: 'Node',
+    deadline: new Date(2020, 6, 18),
+    type: 'LEARN',
+    isComplete: true,
+    nodes: 1,
+  },
+  {
+    id: '7',
+    name: 'GraphQL',
+    deadline: new Date(2020, 7, 30),
+    type: 'LEARN',
+    isComplete: false,
+    nodes: 1,
+  },
+];
+
+export default nodes;
+```
+
