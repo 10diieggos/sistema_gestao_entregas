@@ -151,6 +151,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-
 .vagrant
 frontend/frontend/node_modules
+massa_dados.csv
+massa_dados - Copia.csv

@@ -3,6 +3,8 @@ version: '3'
 services:
   db:
     image: mysql:8
+    env_file:
+      - /home/boxuser/sge/.env
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: user_mysql
@@ -16,6 +18,8 @@ services:
 
   backend:
     build: ./backend
+    env_file:
+      - /home/boxuser/sge/.env
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app
@@ -28,6 +32,8 @@ services:
 
   frontend:
     build: ./frontend
+    env_file:
+      - /home/boxuser/sge/.env
     command: npm start
     volumes:
       - ./frontend/app:/app
@@ -39,10 +45,32 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    env_file:
+      - /home/boxuser/sge/.env
     environment:
       PMA_HOST: db
     ports:
       - "8080:80"
+    networks:
+      - backend_network
+
+  samba:
+    image: dperson/samba
+    container_name: samba
+    env_file:
+      - /home/boxuser/sge/.env
+    environment:
+      - SMB_USER=boxuser
+      - SMB_PASS=${SMB_PASS}
+      - SMB_SHARE1=sambapen;/sambapen;yes;no;no;rw
+    volumes:
+      - /sambapen:/sambapen
+    ports:
+      - "137:137/udp"
+      - "138:138/udp"
+      - "139:139"
+      - "445:445"
+    restart: always
     networks:
       - backend_network
 
