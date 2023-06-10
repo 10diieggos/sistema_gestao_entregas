@@ -69,6 +69,13 @@ CREATE TABLE Contatos (
   id INT PRIMARY KEY AUTO_INCREMENT,
   telefone INT
 );
+CREATE TABLE objetos_enderecos (
+  id_objeto INT,
+  id_endereco INT,
+  PRIMARY KEY (id_objeto, id_endereco),
+  FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
+  FOREIGN KEY (id_endereco) REFERENCES Enderecos(id)
+);
 CREATE TABLE objetos_destinatarios (
   id_objeto INT,
   id_destinatario INT,
@@ -76,19 +83,19 @@ CREATE TABLE objetos_destinatarios (
   FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
   FOREIGN KEY (id_destinatario) REFERENCES Destinatarios(id)
 );
+CREATE TABLE objetos_recebedores (
+  id_objeto INT,
+  id_recebedor INT,
+  PRIMARY KEY (id_objeto, id_recebedor),
+  FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
+  FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id)
+);
 CREATE TABLE destinatarios_contatos (
   id_destinatario INT,
   id_contato INT,
   PRIMARY KEY (id_destinatario, id_contato),
   FOREIGN KEY (id_destinatario) REFERENCES Destinatarios(id),
   FOREIGN KEY (id_contato) REFERENCES Contatos(id)
-);
-CREATE TABLE objetos_enderecos (
-  id_objeto INT,
-  id_endereco INT,
-  PRIMARY KEY (id_objeto, id_endereco),
-  FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
-  FOREIGN KEY (id_endereco) REFERENCES Enderecos(id)
 );
 CREATE TABLE destinatarios_enderecos (
   id_destinatario INT,
@@ -125,11 +132,4 @@ CREATE TABLE recebedores_destinatarios (
   PRIMARY KEY (id_recebedor, id_destinatario),
   FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id),
   FOREIGN KEY (id_destinatario) REFERENCES Destinatarios(id)
-);
-CREATE TABLE objetos_recebedores (
-  id_objeto INT,
-  id_recebedor INT,
-  PRIMARY KEY (id_objeto, id_recebedor),
-  FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
-  FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id)
 );
