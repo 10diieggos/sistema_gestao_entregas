@@ -105,3 +105,24 @@ CREATE TABLE objetos_listas (
   FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
   FOREIGN KEY (id_lista) REFERENCES Listas(id)
 );
+CREATE TABLE recebedores_enderecos (
+  id_recebedor INT,
+  id_endereco INT,
+  PRIMARY KEY (id_recebedor, id_endereco),
+  FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id),
+  FOREIGN KEY (id_endereco) REFERENCES Enderecos(id)
+);
+CREATE TABLE recebedores_contatos (
+  id_recebedor INT,
+  id_contato INT,
+  PRIMARY KEY (id_recebedor, id_contato),
+  FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id),
+  FOREIGN KEY (id_contato) REFERENCES Contatos(id)
+);
+CREATE TABLE recebedores_destinatarios (
+  id_recebedor INT,
+  id_destinatario INT,
+  PRIMARY KEY (id_recebedor, id_destinatario),
+  FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id),
+  FOREIGN KEY (id_destinatario) REFERENCES Destinatarios(id)
+);
