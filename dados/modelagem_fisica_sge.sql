@@ -34,13 +34,13 @@ CREATE TABLE Objetos (
   FOREIGN KEY (id_servico) REFERENCES Servicos(id),
 );
 CREATE TABLE Eventos (
-  id INT PRIMARY KEY AUTO_INCREMENT,
   momento_consulta DATETIME DEFAULT NULL,
   situacao VARCHAR(100) DEFAULT NULL,
   data_hora DATETIME DEFAULT NULL,
   local VARCHAR(100) DEFAULT NULL,
   mensagem VARCHAR(200) DEFAULT NULL,
   id_objetos INT,
+  PRIMARY KEY (id_objetos, data_hora),
   FOREIGN KEY (id_objetos) REFERENCES Objetos(id)
 );
 CREATE TABLE Listas (
