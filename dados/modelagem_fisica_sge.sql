@@ -1,6 +1,7 @@
 CREATE TABLE Recebedores (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  cpf CHAR(11) NOT NULL,
+  cpf CHAR(11),
+  formal TINYINT(1) DEFAULT NULL,
   nome VARCHAR(100) NOT NULL
 );
 CREATE TABLE Servicos (
