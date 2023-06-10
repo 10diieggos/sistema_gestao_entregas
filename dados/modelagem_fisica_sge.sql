@@ -31,12 +31,12 @@ CREATE TABLE Objetos (
   UNIQUE (codigo),
   id_servico INT,
   id_recebedores INT,
-  FOREIGN KEY (id_servico) REFERENCES Servicos(id),
+  FOREIGN KEY (id_servico) REFERENCES Servicos(id)
 );
 CREATE TABLE Eventos (
   momento_consulta DATETIME DEFAULT NULL,
   situacao VARCHAR(100) DEFAULT NULL,
-  data_hora DATETIME DEFAULT NULL,
+  data_hora DATETIME,
   local VARCHAR(100) DEFAULT NULL,
   mensagem VARCHAR(200) DEFAULT NULL,
   id_objetos INT,
