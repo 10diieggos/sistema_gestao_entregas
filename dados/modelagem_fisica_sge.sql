@@ -31,7 +31,6 @@ CREATE TABLE Objetos (
   id_servico INT,
   id_recebedores INT,
   FOREIGN KEY (id_servico) REFERENCES Servicos(id),
-  FOREIGN KEY (id_recebedores) REFERENCES Recebedores(id)
 );
 CREATE TABLE Eventos (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -125,4 +124,11 @@ CREATE TABLE recebedores_destinatarios (
   PRIMARY KEY (id_recebedor, id_destinatario),
   FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id),
   FOREIGN KEY (id_destinatario) REFERENCES Destinatarios(id)
+);
+CREATE TABLE objetos_recebedores (
+  id_objeto INT,
+  id_recebedor INT,
+  PRIMARY KEY (id_objeto, id_recebedor),
+  FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
+  FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id)
 );
