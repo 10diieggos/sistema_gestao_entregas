@@ -15,6 +15,7 @@ services:
       - "3306:3306"
     networks:
       - backend_network
+    restart: always
 
   backend:
     build: ./backend
@@ -53,6 +54,7 @@ services:
       - "8080:80"
     networks:
       - backend_network
+    restart: always
 
 
 volumes:
