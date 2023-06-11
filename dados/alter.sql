@@ -14,3 +14,6 @@ ALTER TABLE objetos_recebedores ADD formal TINYINT(1) DEFAULT NULL;
 ALTER TABLE Recebedores DROP COLUMN formal;
 
 ALTER TABLE `Listas` MODIFY `numero` CHAR(12) DEFAULT NULL;
+
+ALTER TABLE `Objetos` MODIFY `duplicado` TINYINT(1) DEFAULT 0;
+UPDATE Objetos SET duplicado = 0  WHERE duplicado IS NULL;

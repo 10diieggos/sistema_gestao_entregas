@@ -26,7 +26,7 @@ CREATE TABLE Objetos (
   ordem INT DEFAULT NULL,
   disponivel TINYINT(1) DEFAULT NULL,
   pendencia_baixa TINYINT(1) DEFAULT NULL,
-  duplicado TINYINT(1) DEFAULT NULL,
+  duplicado TINYINT(1) DEFAULT 0,
   tentativas_restantes INT DEFAULT NULL,
   UNIQUE (codigo),
   id_servico INT,
