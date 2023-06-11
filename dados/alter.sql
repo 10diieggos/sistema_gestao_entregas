@@ -17,3 +17,6 @@ ALTER TABLE `Listas` MODIFY `numero` CHAR(12) DEFAULT NULL;
 
 ALTER TABLE `Objetos` MODIFY `duplicado` TINYINT(1) DEFAULT 0;
 UPDATE Objetos SET duplicado = 0  WHERE duplicado IS NULL;
+
+ALTER TABLE `Objetos` MODIFY `distribuicao` ENUM('E', 'I') DEFAULT 'I';
+UPDATE Objetos SET distribuicao = 'I' WHERE distribuicao IS NULL;
