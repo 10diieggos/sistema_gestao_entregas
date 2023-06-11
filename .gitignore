@@ -153,8 +153,6 @@ cython_debug/
 
 .vagrant
 frontend/frontend/node_modules
-massa_dados.csv
-massa_dados - Copia.csv
-dados/queryes.sql
-nova_gestao.ods
-
+dados
+!dados/alter.sql
+!dados/modelagem_fisica_sge.sql
