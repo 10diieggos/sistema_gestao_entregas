@@ -6,7 +6,7 @@ CREATE TABLE Recebedores (
 );
 CREATE TABLE Servicos (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  prazo_entrega_interna INT DEFAULT NULL,
+  prazo_guarda_interna INT DEFAULT NULL,
   sigla CHAR(2) NOT NULL,
   admite_residuo TINYINT(1) DEFAULT NULL,
   descricao VARCHAR(100) DEFAULT NULL,
@@ -14,10 +14,10 @@ CREATE TABLE Servicos (
   familia VARCHAR(100) DEFAULT NULL,
   gera_pre_alerta TINYINT(1) DEFAULT NULL,
   hora_real_entrega TINYINT(1) DEFAULT NULL,
-  dados_do_recebedor_na_baixa TINYINT(1) DEFAULT NULL,
+  dados_do_recebedor_na_baixa VARCHAR(100) DEFAULT NULL,
   entrega_externa TINYINT(1) DEFAULT NULL,
   entrega_com_imagem TINYINT(1) DEFAULT NULL,
-  tentativas_previstas INT DEFAULT NULL,
+  tentativas_externas_previstas INT DEFAULT NULL,
   UNIQUE (sigla)
 );
 CREATE TABLE Objetos (
