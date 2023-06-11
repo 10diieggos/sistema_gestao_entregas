@@ -1,35 +1,43 @@
 import React from 'react';
+import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
 
 class Formulario extends React.Component {
-  handleSubmit(e) {
-    e.preventDefault();
-    const campo1 = document.getElementById('campo1').value;
-    const campo2 = document.getElementById('campo2').value;
-    const opcoes = Array.from(document.getElementById('opcoes').selectedOptions).map(option => option.value);
-    console.log(campo1, campo2, opcoes);
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedOption: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  handleChange(event) {
+    this.setState({
+      selectedOption: event.target.value,
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log(this.state.selectedOption);
+  }
+
   render() {
     return (
-      <form>
-        <label>
-          Campo de texto 1:
-          <textarea id="campo1"></textarea>
-        </label>
-        <label>
-          Campo de texto 2:
-          <textarea id="campo2"></textarea>
-        </label>
-        <label>
-          Opções:
-          <select id="opcoes" multiple>
-            <option value="opcao1">Opção 1</option>
-            <option value="opcao2">Opção 2</option>
-            <option value="opcao3">Opção 3</option>
-            <option value="opcao4">Opção 4</option>
-            <option value="opcao5">Opção 5</option>
-          </select>
-        </label>
-        <button type="submit" onClick={this.handleSubmit}>Enviar</button>
+      <form onSubmit={this.handleSubmit}>
+        <FormControl>
+          <FormLabel id="demo-radio-buttons-group-label">Escolha a consulta desejada</FormLabel>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            name="radio-buttons-group"
+            value={this.state.selectedOption}
+            onChange={this.handleChange}
+          >
+            <FormControlLabel value="id_objetos" control={<Radio />} label="Extrair o id_objetos da lista de codigos fornecida" />
+            <FormControlLabel value="opcao2" control={<Radio />} label="opcao2" />
+            <Button variant="contained" type="submit">Contained</Button>
+          </RadioGroup>
+        </FormControl>
       </form>
     );
   }
