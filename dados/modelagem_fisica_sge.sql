@@ -24,6 +24,10 @@ CREATE TABLE Objetos (
   id INT PRIMARY KEY AUTO_INCREMENT,
   codigo CHAR(13) NOT NULL,
   ordem INT DEFAULT NULL,
+  destinatario VARCHAR(100) DEFAULT NULL,
+  endereco VARCHAR(100) DEFAULT NULL,
+  num_endereco INT DEFAULT NULL,
+  distribuicao ENUM('E', 'I')  DEFAULT 'I' ;
   disponivel TINYINT(1) DEFAULT NULL,
   pendencia_baixa TINYINT(1) DEFAULT NULL,
   duplicado TINYINT(1) DEFAULT 0,
