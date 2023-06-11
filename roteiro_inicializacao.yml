@@ -1,0 +1,111 @@
+
+instalar o nvm
+```
+sudo apt install curl
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+source ~/.profile
+nvm install v18.16.0
+nvm use v18.16.0
+```
+
+iniciar o projeto React
+```
+cd ~/sge
+sudo env PATH="$PATH:/home/boxuser/.nvm/versions/node/v18.16.0/bin" npx create-react-app frontend
+```
+assim que a instalação acima iniciar e logo após a criação da pasta do projeto (frontend) for criada
+utilize outro terminal para dar a permissão na pasta para que a instalação crie os links simbolicos com exito
+
+```
+sudo chown -R $USER:$USER frontend/
+```
+
+~/sge/frontend/Dockerfile
+```
+FROM node:18.16.0
+
+WORKDIR /app
+
+COPY app/package.json /app/
+COPY app/package-lock.json /app/
+RUN npm install
+
+COPY app/ /app/
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+
+```	
+
+~/sge/docker-compose.yml
+```
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8
+    env_file:
+      - /home/boxuser/sge/.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: user_mysql
+      MYSQL_PASSWORD: ${MYSQL_USER}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - backend_network
+    restart: always
+
+  backend:
+    build: ./backend
+    env_file:
+      - /home/boxuser/sge/.env
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - backend_network
+
+  frontend:
+    build: ./frontend
+    env_file:
+      - /home/boxuser/sge/.env
+    command: npm start
+    volumes:
+      - ./frontend/app:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend_network
+      - backend_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    env_file:
+      - /home/boxuser/sge/.env
+    environment:
+      PMA_HOST: db
+    ports:
+      - "8080:80"
+    networks:
+      - backend_network
+    restart: always
+
+
+volumes:
+  mysql_data:
+    external: true
+
+networks:
+  frontend_network:
+  backend_network:
+```

@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import '@fontsource/roboto/300.css'; // Peso light
-import '@fontsource/roboto/400.css'; // Peso regular
-import '@fontsource/roboto/500.css'; // Peso médio
-import '@fontsource/roboto/700.css'; // Peso bold
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
