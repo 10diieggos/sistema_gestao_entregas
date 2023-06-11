@@ -1,6 +1,9 @@
+// Arquivo Formulario.js
 import React from 'react';
 import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
 import { TextareaAutosize } from '@mui/base';
+import extractIdObjetos from './extractIdObjetos';
+import convertToLowerCase from './convertToLowerCase';
 
 class Formulario extends React.Component {
   constructor(props) {
@@ -29,9 +32,17 @@ class Formulario extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state.selectedOption)
-    // Tratar o valor do inputText aqui
-    const treatedValue = this.state.inputText.toUpperCase();
+  
+    const optionMethods = {
+      'id_objetos': extractIdObjetos,
+      'letras_minusculas': convertToLowerCase,
+      // Adicione outras opções e métodos aqui se necessário
+    };
+  
+    const selectedMethod = optionMethods[this.state.selectedOption];
+  
+    const treatedValue = selectedMethod(this.state.inputText);
+  
     // Atualizar o estado do outputText com o valor tratado
     this.setState({
       outputText: treatedValue,
@@ -51,7 +62,7 @@ class Formulario extends React.Component {
             onChange={this.handleRadioChange}
           >
             <FormControlLabel value="id_objetos" control={<Radio />} label="Extrair o id_objetos da lista de codigos fornecida" />
-            <FormControlLabel value="opcao2" control={<Radio />} label="opcao2" />
+            <FormControlLabel value="letras_minusculas" control={<Radio />} label="Transformar todas as letras em minusculas" />
           </RadioGroup>
           <Button variant="contained" type="submit">Contained</Button>
         </FormControl>
