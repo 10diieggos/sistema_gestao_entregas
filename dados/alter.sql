@@ -12,3 +12,5 @@ ADD distribuicao ENUM('E', 'I') DEFAULT NULL;
 
 ALTER TABLE objetos_recebedores ADD formal TINYINT(1) DEFAULT NULL;
 ALTER TABLE Recebedores DROP COLUMN formal;
+
+ALTER TABLE `Listas` MODIFY `numero` CHAR(12) DEFAULT NULL;
