@@ -1,4 +1,3 @@
-// Arquivo Formulario.js
 import React from 'react';
 import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
 import { TextareaAutosize } from '@mui/base';
@@ -16,6 +15,7 @@ class Formulario extends React.Component {
     this.handleRadioChange = this.handleRadioChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCopyClick = this.handleCopyClick.bind(this);
   }
 
   handleRadioChange(event) {
@@ -32,21 +32,27 @@ class Formulario extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-  
+
     const optionMethods = {
       'insere_novos_objetos': insere_novos_objetos,
       'id_objetos': extrai_id_objeto,
       // Adicione outras opções e métodos aqui se necessário
     };
-  
+
     const selectedMethod = optionMethods[this.state.selectedOption];
-  
+
     const treatedValue = selectedMethod(this.state.inputText);
-  
+
     // Atualizar o estado do outputText com o valor tratado
     this.setState({
       outputText: treatedValue,
     });
+  }
+
+  handleCopyClick(event) {
+    event.preventDefault();
+
+    navigator.clipboard.writeText(this.state.outputText);
   }
 
   render() {
@@ -66,18 +72,23 @@ class Formulario extends React.Component {
           </RadioGroup>
           <Button variant="contained" type="submit">Contained</Button>
         </FormControl>
-          <TextareaAutosize 
-            minRows={50} 
-            maxRows="60"
-            value={this.state.inputText}
-            onChange={this.handleInputChange}
-          />     
-          <TextareaAutosize 
-            minRows={50} 
-            maxRows="60"
-            value={this.state.outputText}
-            readOnly
-          />     
+          
+        <TextareaAutosize 
+          minRows={50} 
+          maxRows="60"
+          value={this.state.inputText}
+          onChange={this.handleInputChange}
+        />     
+          
+        <TextareaAutosize 
+          minRows={50} 
+          maxRows="60"
+          value={this.state.outputText}
+          readOnly
+        />
+
+        <Button variant="contained" onClick={this.handleCopyClick}>Copiar resultado</Button>
+          
       </form>
     );
   }
