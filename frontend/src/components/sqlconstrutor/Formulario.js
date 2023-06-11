@@ -2,8 +2,8 @@
 import React from 'react';
 import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
 import { TextareaAutosize } from '@mui/base';
-import extractIdObjetos from './extractIdObjetos';
-import convertToLowerCase from './convertToLowerCase';
+import extrai_id_objeto from './extrai_id_objeto';
+import insere_novos_objetos from './insere_novos_objetos';
 
 class Formulario extends React.Component {
   constructor(props) {
@@ -34,8 +34,8 @@ class Formulario extends React.Component {
     event.preventDefault();
   
     const optionMethods = {
-      'id_objetos': extractIdObjetos,
-      'letras_minusculas': convertToLowerCase,
+      'insere_novos_objetos': insere_novos_objetos,
+      'id_objetos': extrai_id_objeto,
       // Adicione outras opções e métodos aqui se necessário
     };
   
@@ -61,8 +61,8 @@ class Formulario extends React.Component {
             value={this.state.selectedOption}
             onChange={this.handleRadioChange}
           >
-            <FormControlLabel value="id_objetos" control={<Radio />} label="Extrair o id_objetos da lista de codigos fornecida" />
-            <FormControlLabel value="letras_minusculas" control={<Radio />} label="Transformar todas as letras em minusculas" />
+            <FormControlLabel value="insere_novos_objetos" control={<Radio />} label="Inserir novos objetos" />
+            <FormControlLabel value="id_objetos" control={<Radio />} label="Extrair o id do objeto e serviço" />
           </RadioGroup>
           <Button variant="contained" type="submit">Contained</Button>
         </FormControl>
