@@ -56,6 +56,7 @@ class Formulario extends React.Component {
       outputText: treatedValue,
       error: '',
     });
+    navigator.clipboard.writeText(this.state.outputText);
   }
 
   handleCopyClick(event) {
@@ -81,8 +82,7 @@ class Formulario extends React.Component {
           </RadioGroup>
         </FormControl>
 
-        <Button className="btn" variant="contained" onClick={this.handleCopyClick}>Copiar resultado</Button>
-
+        {this.state.outputText && <Button className="btn" variant="contained" onClick={this.handleCopyClick}>Copiar resultado</Button>}
         {this.state.error &&
           <Alert severity="warning" variant='filled'>
             <AlertTitle>Atenção</AlertTitle>
