@@ -1,8 +1,8 @@
 // caminho relativo deste arquivo: frontend/src/components/sqlconstrutor/Formulario.js
 import React from 'react';
-import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
+import { Alert, AlertTitle, FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
 import { TextareaAutosize } from '@mui/base';
-import extrai_id_objeto from './extrai_id_objeto';
+import select_ids_objeto_servico from './select_ids_objeto_servico';
 import insere_servico from './insere_servico';
 import insere_novos_objetos from './insere_novos_objetos';
 import './Formulario.css';
@@ -32,18 +32,29 @@ class Formulario extends React.Component {
     const optionMethods = {
       'insere_servico': insere_servico,
       'insere_novos_objetos': insere_novos_objetos,
-      'id_objetos': extrai_id_objeto,
+      'select_ids_objeto_servico': select_ids_objeto_servico,
       // Adicione outras opções e métodos aqui se necessário
     };
-
+  
     const selectedMethod = optionMethods[this.state.selectedOption];
-
+  
+    if (!selectedMethod) {
+      // Exibir mensagem de erro e limpar o conteúdo do textarea
+      this.setState({
+        inputText: '',
+        outputText: '',
+        error: 'Selecione uma opção antes de inserir o texto.',
+      });
+      return;
+    }
+  
     const treatedValue = selectedMethod(inputText);
-
-    // Atualizar o estado do inputText e do outputText
+  
+    // Limpar a mensagem de erro, se houver, e atualizar o estado do inputText e do outputText
     this.setState({
       inputText: inputText,
       outputText: treatedValue,
+      error: '',
     });
   }
 
@@ -66,13 +77,18 @@ class Formulario extends React.Component {
           >
             <FormControlLabel value="insere_servico" control={<Radio />} label="Inserir novo servico" />
             <FormControlLabel value="insere_novos_objetos" control={<Radio />} label="Inserir novos objetos" />
-            <FormControlLabel value="id_objetos" control={<Radio />} label="Extrair o id do objeto e serviço" />
+            <FormControlLabel value="select_ids_objeto_servico" control={<Radio />} label="Extrair o id do objeto e do serviço" />
           </RadioGroup>
         </FormControl>
 
         <Button className="btn" variant="contained" onClick={this.handleCopyClick}>Copiar resultado</Button>
 
-          
+        {this.state.error &&
+          <Alert severity="warning" variant='filled'>
+            <AlertTitle>Atenção</AlertTitle>
+            {this.state.error}
+          </Alert>}      
+        
         <TextareaAutosize 
           className="textarea"
           minRows={10} 
