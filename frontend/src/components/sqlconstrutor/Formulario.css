@@ -1,0 +1,30 @@
+/* caminho relativo deste arquivo: frontend/src/components/sqlconstrutor/Formulario.css */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.form-control {
+  margin-bottom: 20px;
+}
+
+.textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.output-textarea {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.btn {
+  margin-top: 20px;
+}

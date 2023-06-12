@@ -1,8 +1,10 @@
+// caminho relativo deste arquivo: frontend/src/components/sqlconstrutor/Formulario.js
 import React from 'react';
 import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
 import { TextareaAutosize } from '@mui/base';
 import extrai_id_objeto from './extrai_id_objeto';
 import insere_novos_objetos from './insere_novos_objetos';
+import './Formulario.css';
 
 class Formulario extends React.Component {
   constructor(props) {
@@ -51,9 +53,8 @@ class Formulario extends React.Component {
 
   render() {
     return (
-      <form>
-         
-        <FormControl>
+      <div className="form-container">
+        <FormControl className="form-control">
           <FormLabel id="demo-radio-buttons-group-label">Escolha a operação desejada</FormLabel>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
@@ -67,22 +68,26 @@ class Formulario extends React.Component {
         </FormControl>
           
         <TextareaAutosize 
-          minRows={50} 
-          maxRows="60"
+          className="textarea"
+          minRows={10} 
+          maxRows="20"
           value={this.state.inputText}
           onChange={this.handleInputChange}
+          placeholder="Insira o texto aqui..."
         />     
           
         <TextareaAutosize 
-          minRows={50} 
-          maxRows="60"
+          className="textarea output-textarea"
+          minRows={10} 
+          maxRows="20"
           value={this.state.outputText}
           readOnly
+          placeholder="Resultado..."
         />
 
-        <Button variant="contained" onClick={this.handleCopyClick}>Copiar resultado</Button>
+        <Button className="btn" variant="contained" onClick={this.handleCopyClick}>Copiar resultado</Button>
           
-      </form>
+      </div>
     );
   }
 }
