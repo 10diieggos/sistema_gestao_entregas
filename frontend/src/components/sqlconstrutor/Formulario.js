@@ -66,6 +66,9 @@ class Formulario extends React.Component {
             <FormControlLabel value="id_objetos" control={<Radio />} label="Extrair o id do objeto e serviço" />
           </RadioGroup>
         </FormControl>
+
+        <Button className="btn" variant="contained" onClick={this.handleCopyClick}>Copiar resultado</Button>
+
           
         <TextareaAutosize 
           className="textarea"
@@ -85,7 +88,6 @@ class Formulario extends React.Component {
           placeholder="Resultado..."
         />
 
-        <Button className="btn" variant="contained" onClick={this.handleCopyClick}>Copiar resultado</Button>
           
       </div>
     );
