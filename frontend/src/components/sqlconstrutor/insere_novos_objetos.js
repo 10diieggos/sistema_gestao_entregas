@@ -16,7 +16,7 @@ export default function insere_novos_objetos(inputText) {
   }
   
   // constrói a consulta SQL de inserção com os valores das linhas
-  const query = `INSERT INTO Objetos (codigo, ordem, destinatario, endereco, num_endereco, distribuicao, duplicado) VALUES ${values.join(', ')};`;
+  const query = `INSERT INTO Objetos (codigo, ordem, destinatario, endereco, num_endereco, distribuicao, duplicado) VALUES\n ${values.join(',\n ')};`;
   
   return query;
 }
