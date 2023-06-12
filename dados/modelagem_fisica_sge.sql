@@ -1,7 +1,6 @@
 CREATE TABLE Recebedores (
   id INT PRIMARY KEY AUTO_INCREMENT,
   cpf CHAR(11),
-  formal TINYINT(1) DEFAULT NULL,
   nome VARCHAR(100) NOT NULL
 );
 CREATE TABLE Servicos (
@@ -27,25 +26,25 @@ CREATE TABLE Objetos (
   destinatario VARCHAR(100) DEFAULT NULL,
   endereco VARCHAR(100) DEFAULT NULL,
   num_endereco INT DEFAULT 0,
-  distribuicao ENUM('E', 'I')  DEFAULT 'I' ;
+  distribuicao ENUM('E', 'I')  DEFAULT 'I',
+  duplicado TINYINT(1) DEFAULT 0,
+  id_servico INT,
+  id_recebedor INT,
   disponivel TINYINT(1) DEFAULT NULL,
   pendencia_baixa TINYINT(1) DEFAULT NULL,
-  duplicado TINYINT(1) DEFAULT 0,
   tentativas_restantes INT DEFAULT NULL,
   UNIQUE (codigo),
-  id_servico INT,
-  id_recebedores INT,
   FOREIGN KEY (id_servico) REFERENCES Servicos(id)
 );
 CREATE TABLE Eventos (
-  momento_consulta DATETIME DEFAULT NULL,
-  situacao VARCHAR(100) DEFAULT NULL,
-  data_hora DATETIME,
-  local VARCHAR(100) DEFAULT NULL,
-  mensagem VARCHAR(200) DEFAULT NULL,
   id_objeto INT,
+  data_hora DATETIME,
+  -- momento_consulta DATETIME DEFAULT NULL,
+  local VARCHAR(100) DEFAULT NULL,
+  situacao VARCHAR(100) DEFAULT NULL,
+  mensagem VARCHAR(200) DEFAULT NULL,
   PRIMARY KEY (id_objeto, data_hora),
-  FOREIGN KEY (id_objetos) REFERENCES Objetos(id)
+  FOREIGN KEY (id_objeto) REFERENCES Objetos(id)
 );
 CREATE TABLE Listas (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -90,6 +89,7 @@ CREATE TABLE objetos_enderecos (
 CREATE TABLE objetos_recebedores (
   id_objeto INT,
   id_recebedor INT,
+  formal TINYINT(1) DEFAULT NULL,
   PRIMARY KEY (id_objeto, id_recebedor),
   FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
   FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id)
