@@ -5,6 +5,8 @@ import { TextareaAutosize } from '@mui/base';
 import select_ids_objeto_servico from './select_ids_objeto_servico';
 import insere_servico from './insere_servico';
 import insere_novos_objetos from './insere_novos_objetos';
+import insere_listas from './insere_listas';
+import select_id_listas from './select_id_listas';
 import './Formulario.css';
 
 class Formulario extends React.Component {
@@ -33,6 +35,8 @@ class Formulario extends React.Component {
       'insere_servico': insere_servico,
       'insere_novos_objetos': insere_novos_objetos,
       'select_ids_objeto_servico': select_ids_objeto_servico,
+      'insere_listas': insere_listas,
+      'select_id_listas': select_id_listas,
       // Adicione outras opções e métodos aqui se necessário
     };
   
@@ -43,7 +47,7 @@ class Formulario extends React.Component {
       this.setState({
         inputText: '',
         outputText: '',
-        error: 'Selecione uma opção antes de inserir o texto.',
+        error: 'Selecione uma operação antes de inserir os dados.',
       });
       return;
     }
@@ -79,6 +83,8 @@ class Formulario extends React.Component {
             <FormControlLabel value="insere_servico" control={<Radio />} label="Inserir novo servico" />
             <FormControlLabel value="insere_novos_objetos" control={<Radio />} label="Inserir novos objetos" />
             <FormControlLabel value="select_ids_objeto_servico" control={<Radio />} label="Extrair o id do objeto e do serviço" />
+            <FormControlLabel value="insere_listas" control={<Radio />} label="Inserir novas listas" />
+            <FormControlLabel value="select_id_listas" control={<Radio />} label="Extrair o id das listas" />
           </RadioGroup>
         </FormControl>
 
