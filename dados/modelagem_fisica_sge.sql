@@ -5,8 +5,8 @@ CREATE TABLE Recebedores (
 );
 CREATE TABLE Servicos (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  prazo_guarda_interna INT DEFAULT NULL,
   sigla CHAR(2) NOT NULL,
+  prazo_guarda_interna INT DEFAULT NULL,
   admite_residuo TINYINT(1) DEFAULT NULL,
   descricao VARCHAR(100) DEFAULT NULL,
   categoria VARCHAR(100) DEFAULT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE Eventos (
 CREATE TABLE Listas (
   id INT PRIMARY KEY AUTO_INCREMENT,
   data_Hora DATETIME DEFAULT NULL,
-  numero CHAR(12) DEFAULT NULL;
+  numero CHAR(12) DEFAULT NULL,
   modalidade ENUM('LOEC', 'LDI') DEFAULT NULL,
   UNIQUE (numero)
 );
