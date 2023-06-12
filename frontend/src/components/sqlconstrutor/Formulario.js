@@ -3,6 +3,7 @@ import React from 'react';
 import { FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
 import { TextareaAutosize } from '@mui/base';
 import extrai_id_objeto from './extrai_id_objeto';
+import insere_servico from './insere_servico';
 import insere_novos_objetos from './insere_novos_objetos';
 import './Formulario.css';
 
@@ -29,6 +30,7 @@ class Formulario extends React.Component {
     const inputText = event.target.value;
 
     const optionMethods = {
+      'insere_servico': insere_servico,
       'insere_novos_objetos': insere_novos_objetos,
       'id_objetos': extrai_id_objeto,
       // Adicione outras opções e métodos aqui se necessário
@@ -62,6 +64,7 @@ class Formulario extends React.Component {
             value={this.state.selectedOption}
             onChange={this.handleRadioChange}
           >
+            <FormControlLabel value="insere_servico" control={<Radio />} label="Inserir novo servico" />
             <FormControlLabel value="insere_novos_objetos" control={<Radio />} label="Inserir novos objetos" />
             <FormControlLabel value="id_objetos" control={<Radio />} label="Extrair o id do objeto e serviço" />
           </RadioGroup>
