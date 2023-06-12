@@ -22,3 +22,5 @@ ALTER TABLE `Objetos` MODIFY `distribuicao` ENUM('E', 'I') DEFAULT 'I';
 UPDATE Objetos SET distribuicao = 'I' WHERE distribuicao IS NULL;
 
 ALTER TABLE `Objetos` MODIFY `num_endereco` INT DEFAULT 0;
+
+ALTER TABLE Eventos RENAME COLUMN id_objetos TO id_objeto;

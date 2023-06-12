@@ -43,9 +43,9 @@ CREATE TABLE Eventos (
   data_hora DATETIME,
   local VARCHAR(100) DEFAULT NULL,
   mensagem VARCHAR(200) DEFAULT NULL,
-  id_objetos INT,
-  PRIMARY KEY (id_objetos, data_hora),
-  FOREIGN KEY (id_objetos) REFERENCES Objetos(id)
+  id_objeto INT,
+  PRIMARY KEY (id_objeto, data_hora),
+  FOREIGN KEY (id_objeto) REFERENCES Objetos(id)
 );
 CREATE TABLE Listas (
   id INT PRIMARY KEY AUTO_INCREMENT,
