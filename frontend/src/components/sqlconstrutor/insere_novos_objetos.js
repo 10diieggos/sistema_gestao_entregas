@@ -1,22 +1,28 @@
 export default function insere_novos_objetos(inputText) {
-  const lines = inputText.split('\n'); // separa as linhas do conjunto de dados
-  
-  let values = []; // array para armazenar os valores para cada linha
-  
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (line.trim() !== '') { // verifica se a linha não está vazia
-      const columns = line.split('\t'); // separa as colunas da linha por tabulação
-      
-      // adiciona os valores da linha atual ao array de valores
-      const valueString = `('${columns[0]}', ${columns[1]}, '${columns[2]}', '${columns[3]}', ${parseInt(columns[4], 10)}, '${columns[5]}', ${parseInt(columns[6], 10)})`;
-      
-      values.push(valueString);
+    // quebra a string em linhas
+    const linhas = inputText.split('\n');
+    let query = "INSERT INTO Objetos (codigo, ordem, destinatario, endereco, num_endereco, distribuicao, duplicado, id_servico, disponivel, tentativas_restantes)\nVALUES\n";
+    for (let i = 0; i < linhas.length; i++) {
+      // quebra a linha em campos
+      const campos = linhas[i].split('\t');
+      if (campos.length === 7) {
+        const codigo = campos[0];
+        const ordem = campos[1];
+        const destinatario = campos[2];
+        const endereco = campos[3];
+        const num_endereco = campos[4];
+        const distribuicao = campos[5];
+        const duplicado = campos[6];
+        const sigla = codigo.substring(0, 2);
+        let id_servico_query = `(SELECT id FROM Servicos WHERE sigla = '${sigla}')`;
+        let tentativas_restantes_query = '0';
+        if (distribuicao === 'E') {
+          tentativas_restantes_query = `(SELECT tentativas_externas_previstas FROM Servicos WHERE sigla = '${sigla}')`;
+        }
+        query += `('${codigo}', ${ordem}, '${destinatario}', '${endereco}', ${num_endereco}, '${distribuicao}', ${duplicado}, ${id_servico_query}, 1, ${tentativas_restantes_query}),\n`;
+      }
     }
+    // remove a vírgula extra no final e adiciona ponto e vírgula no final da query
+    query = query.slice(0, -2) + ';';
+    return query;
   }
-  
-  // constrói a consulta SQL de inserção com os valores das linhas
-  const query = `INSERT INTO Objetos (codigo, ordem, destinatario, endereco, num_endereco, distribuicao, duplicado) VALUES\n ${values.join(',\n ')};`;
-  
-  return query;
-}
