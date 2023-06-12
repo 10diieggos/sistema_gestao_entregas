@@ -1,8 +1,8 @@
-DROP TABLE objetos_destinatarios;
-DROP TABLE destinatarios_contatos;
-DROP TABLE destinatarios_enderecos;
-DROP TABLE recebedores_destinatarios;
-DROP TABLE Destinatarios;
+-- DROP TABLE objetos_destinatarios;
+-- DROP TABLE destinatarios_contatos;
+-- DROP TABLE destinatarios_enderecos;
+-- DROP TABLE recebedores_destinatarios;
+-- DROP TABLE Destinatarios;
 
 ALTER TABLE Objetos
 ADD destinatario VARCHAR(100) DEFAULT NULL,
@@ -24,3 +24,5 @@ UPDATE Objetos SET distribuicao = 'I' WHERE distribuicao IS NULL;
 ALTER TABLE `Objetos` MODIFY `num_endereco` INT DEFAULT 0;
 
 ALTER TABLE Eventos RENAME COLUMN id_objetos TO id_objeto;
+
+ALTER TABLE Eventos DROP COLUMN momento_consulta;
