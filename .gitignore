@@ -156,3 +156,4 @@ frontend/node_modules
 dados
 !dados/alter.sql
 !dados/modelagem_fisica_sge.sql
+prompts
