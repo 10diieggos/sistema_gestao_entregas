@@ -49,7 +49,7 @@ CREATE TABLE Eventos (
 CREATE TABLE Listas (
   id INT PRIMARY KEY AUTO_INCREMENT,
   data_Hora DATETIME DEFAULT NULL,
-  numero INT,
+  numero CHAR(12) DEFAULT NULL;
   modalidade ENUM('LOEC', 'LDI') DEFAULT NULL,
   UNIQUE (numero)
 );
