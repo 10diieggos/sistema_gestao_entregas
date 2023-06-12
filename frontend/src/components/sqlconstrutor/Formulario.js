@@ -14,7 +14,6 @@ class Formulario extends React.Component {
     };
     this.handleRadioChange = this.handleRadioChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCopyClick = this.handleCopyClick.bind(this);
   }
 
@@ -25,13 +24,7 @@ class Formulario extends React.Component {
   }
 
   handleInputChange(event) {
-    this.setState({
-      inputText: event.target.value,
-    });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
+    const inputText = event.target.value;
 
     const optionMethods = {
       'insere_novos_objetos': insere_novos_objetos,
@@ -41,10 +34,11 @@ class Formulario extends React.Component {
 
     const selectedMethod = optionMethods[this.state.selectedOption];
 
-    const treatedValue = selectedMethod(this.state.inputText);
+    const treatedValue = selectedMethod(inputText);
 
-    // Atualizar o estado do outputText com o valor tratado
+    // Atualizar o estado do inputText e do outputText
     this.setState({
+      inputText: inputText,
       outputText: treatedValue,
     });
   }
@@ -57,7 +51,7 @@ class Formulario extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form>
          
         <FormControl>
           <FormLabel id="demo-radio-buttons-group-label">Escolha a operação desejada</FormLabel>
@@ -70,7 +64,6 @@ class Formulario extends React.Component {
             <FormControlLabel value="insere_novos_objetos" control={<Radio />} label="Inserir novos objetos" />
             <FormControlLabel value="id_objetos" control={<Radio />} label="Extrair o id do objeto e serviço" />
           </RadioGroup>
-          <Button variant="contained" type="submit">Contained</Button>
         </FormControl>
           
         <TextareaAutosize 
