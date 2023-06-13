@@ -68,10 +68,10 @@ CREATE TABLE Enderecos (
 --   id INT PRIMARY KEY AUTO_INCREMENT,
 --   nome VARCHAR(100) DEFAULT NULL
 -- );
-CREATE TABLE Contatos (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  telefone INT
-);
+-- CREATE TABLE Contatos (
+--   id INT PRIMARY KEY AUTO_INCREMENT,
+--   telefone INT
+-- );
 CREATE TABLE objetos_enderecos (
   id_objeto INT,
   id_endereco INT,
