@@ -64,6 +64,13 @@ CREATE TABLE Contatos (
   telefone CHAR(11),
   UNIQUE (telefone)
 );
+CREATE TABLE objetos_contatos (
+  id_objeto INT,
+  id_contato INT,
+  PRIMARY KEY (id_objeto, id_contato),
+  FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
+  FOREIGN KEY (id_contato) REFERENCES Contatos(id)
+);
 CREATE TABLE Eventos (
   id_objeto INT,
   data_hora DATETIME,
