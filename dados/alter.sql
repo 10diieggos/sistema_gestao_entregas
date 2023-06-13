@@ -31,3 +31,6 @@ ALTER TABLE Recebedores ADD UNIQUE (cpf);
 
 DROP TABLE recebedores_contatos;
 DROP TABLE recebedores_enderecos;
+
+ALTER TABLE Objetos DROP COLUMN id_recebedor;
+

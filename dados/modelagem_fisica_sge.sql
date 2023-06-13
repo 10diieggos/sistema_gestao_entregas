@@ -30,7 +30,6 @@ CREATE TABLE Objetos (
   distribuicao ENUM('E', 'I')  DEFAULT 'I',
   duplicado TINYINT(1) DEFAULT 0,
   id_servico INT,
-  id_recebedor INT,
   disponivel TINYINT(1) DEFAULT NULL,
   pendencia_baixa TINYINT(1) DEFAULT NULL,
   tentativas_restantes INT DEFAULT NULL,
