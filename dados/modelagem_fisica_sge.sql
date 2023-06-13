@@ -1,8 +1,8 @@
 CREATE TABLE Recebedores (
   id INT PRIMARY KEY AUTO_INCREMENT,
   cpf CHAR(11),
-  nome VARCHAR(100) NOT NULL
-  UNIQUE (cpf);
+  nome VARCHAR(100) NOT NULL,
+  UNIQUE (cpf)
 );
 CREATE TABLE Servicos (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -24,7 +24,6 @@ CREATE TABLE Objetos (
   id INT PRIMARY KEY AUTO_INCREMENT,
   codigo CHAR(13) NOT NULL,
   ordem INT DEFAULT NULL,
-  destinatario VARCHAR(100) DEFAULT NULL,
   endereco VARCHAR(100) DEFAULT NULL,
   num_endereco INT DEFAULT 0,
   distribuicao ENUM('E', 'I')  DEFAULT 'I',
@@ -64,10 +63,10 @@ CREATE TABLE Enderecos (
   bairro VARCHAR(100) DEFAULT NULL,
   CEP INT DEFAULT NULL
 );
--- CREATE TABLE Destinatarios (
---   id INT PRIMARY KEY AUTO_INCREMENT,
---   nome VARCHAR(100) DEFAULT NULL
--- );
+CREATE TABLE Destinatarios (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  telefone CHAR(11) DEFAULT NULL
+);
 -- CREATE TABLE Contatos (
 --   id INT PRIMARY KEY AUTO_INCREMENT,
 --   telefone INT
@@ -79,13 +78,13 @@ CREATE TABLE objetos_enderecos (
   FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
   FOREIGN KEY (id_endereco) REFERENCES Enderecos(id)
 );
--- CREATE TABLE objetos_destinatarios (
---   id_objeto INT,
---   id_destinatario INT,
---   PRIMARY KEY (id_objeto, id_destinatario),
---   FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
---   FOREIGN KEY (id_destinatario) REFERENCES Destinatarios(id)
--- );
+CREATE TABLE objetos_destinatarios (
+  id_objeto INT,
+  id_destinatario INT,
+  PRIMARY KEY (id_objeto, id_destinatario),
+  FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
+  FOREIGN KEY (id_destinatario) REFERENCES Destinatarios(id)
+);
 CREATE TABLE objetos_recebedores (
   id_objeto INT,
   id_recebedor INT,

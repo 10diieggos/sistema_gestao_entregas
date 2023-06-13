@@ -36,3 +36,4 @@ ALTER TABLE Objetos DROP COLUMN id_recebedor;
 
 DROP TABLE Contatos;
 
+ALTER TABLE Objetos DROP COLUMN destinatario;
