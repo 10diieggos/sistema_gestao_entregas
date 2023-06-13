@@ -84,10 +84,10 @@ class Formulario extends React.Component {
           >
             <FormControlLabel value="insere_servico" control={<Radio />} label="Inserir novo servico" />
             <FormControlLabel value="insere_novos_objetos" control={<Radio />} label="Inserir novos objetos" />
-            <FormControlLabel value="select_ids_objeto_servico" control={<Radio />} label="Extrair o id do objeto e do serviço" />
             <FormControlLabel value="insere_listas" control={<Radio />} label="Inserir novas listas" />
-            <FormControlLabel value="select_id_listas" control={<Radio />} label="Extrair o id das listas" />
             <FormControlLabel value="associar_objetos_listas" control={<Radio />} label="Inserir associação entre objetos e listas" />
+            <FormControlLabel value="select_ids_objeto_servico" control={<Radio />} label="Extrair o id do objeto e do serviço" />
+            <FormControlLabel value="select_id_listas" control={<Radio />} label="Extrair o id das listas" />
           </RadioGroup>
         </FormControl>
 
