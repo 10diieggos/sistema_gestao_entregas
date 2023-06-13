@@ -1,9 +1,3 @@
-CREATE TABLE Recebedores (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  cpf CHAR(11),
-  nome VARCHAR(100) NOT NULL,
-  UNIQUE (cpf)
-);
 CREATE TABLE Servicos (
   id INT PRIMARY KEY AUTO_INCREMENT,
   prazo_guarda_interna INT DEFAULT NULL,
@@ -24,8 +18,6 @@ CREATE TABLE Objetos (
   id INT PRIMARY KEY AUTO_INCREMENT,
   codigo CHAR(13) NOT NULL,
   ordem INT DEFAULT NULL,
-  endereco VARCHAR(100) DEFAULT NULL,
-  num_endereco INT DEFAULT 0,
   distribuicao ENUM('E', 'I')  DEFAULT 'I',
   duplicado TINYINT(1) DEFAULT 0,
   id_servico INT,
@@ -35,22 +27,19 @@ CREATE TABLE Objetos (
   UNIQUE (codigo),
   FOREIGN KEY (id_servico) REFERENCES Servicos(id)
 );
-CREATE TABLE Eventos (
-  id_objeto INT,
-  data_hora DATETIME,
-  -- momento_consulta DATETIME DEFAULT NULL,
-  local VARCHAR(100) DEFAULT NULL,
-  situacao VARCHAR(100) DEFAULT NULL,
-  mensagem VARCHAR(200) DEFAULT NULL,
-  PRIMARY KEY (id_objeto, data_hora),
-  FOREIGN KEY (id_objeto) REFERENCES Objetos(id)
-);
-CREATE TABLE Listas (
+CREATE TABLE Recebedores (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  data_Hora DATETIME DEFAULT NULL,
-  numero CHAR(12) DEFAULT NULL,
-  modalidade ENUM('LOEC', 'LDI') DEFAULT NULL,
-  UNIQUE (numero)
+  cpf CHAR(11),
+  nome VARCHAR(100) NOT NULL,
+  UNIQUE (cpf)
+);
+CREATE TABLE objetos_recebedores (
+  id_objeto INT,
+  id_recebedor INT,
+  formal TINYINT(1) DEFAULT NULL,
+  PRIMARY KEY (id_objeto, id_recebedor),
+  FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
+  FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id)
 );
 CREATE TABLE Enderecos (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -61,16 +50,8 @@ CREATE TABLE Enderecos (
   municipio VARCHAR(100) DEFAULT NULL,
   estado CHAR(2) DEFAULT NULL,
   bairro VARCHAR(100) DEFAULT NULL,
-  CEP INT DEFAULT NULL
+  CEP CHAR(8) DEFAULT NULL
 );
-CREATE TABLE Destinatarios (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  telefone CHAR(11) DEFAULT NULL
-);
--- CREATE TABLE Contatos (
---   id INT PRIMARY KEY AUTO_INCREMENT,
---   telefone INT
--- );
 CREATE TABLE objetos_enderecos (
   id_objeto INT,
   id_endereco INT,
@@ -78,6 +59,13 @@ CREATE TABLE objetos_enderecos (
   FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
   FOREIGN KEY (id_endereco) REFERENCES Enderecos(id)
 );
+CREATE TABLE Destinatarios (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  cpf CHAR(11),
+  nome VARCHAR(100) NOT NULL,
+  telefone CHAR(11) DEFAULT NULL
+);
+
 CREATE TABLE objetos_destinatarios (
   id_objeto INT,
   id_destinatario INT,
@@ -85,13 +73,30 @@ CREATE TABLE objetos_destinatarios (
   FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
   FOREIGN KEY (id_destinatario) REFERENCES Destinatarios(id)
 );
-CREATE TABLE objetos_recebedores (
+CREATE TABLE Listas (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  data_Hora DATETIME DEFAULT NULL,
+  numero CHAR(12) DEFAULT NULL,
+  modalidade ENUM('LOEC', 'LDI') DEFAULT NULL,
+  UNIQUE (numero)
+);
+CREATE TABLE objetos_listas (
   id_objeto INT,
-  id_recebedor INT,
-  formal TINYINT(1) DEFAULT NULL,
-  PRIMARY KEY (id_objeto, id_recebedor),
+  id_lista INT,
+  posicao_objeto INT,
+  PRIMARY KEY (id_objeto, id_lista),
   FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
-  FOREIGN KEY (id_recebedor) REFERENCES Recebedores(id)
+  FOREIGN KEY (id_lista) REFERENCES Listas(id)
+);
+CREATE TABLE Eventos (
+  id_objeto INT,
+  data_hora DATETIME,
+  -- momento_consulta DATETIME DEFAULT NULL,
+  local VARCHAR(100) DEFAULT NULL,
+  situacao VARCHAR(100) DEFAULT NULL,
+  mensagem VARCHAR(200) DEFAULT NULL,
+  PRIMARY KEY (id_objeto, data_hora),
+  FOREIGN KEY (id_objeto) REFERENCES Objetos(id)
 );
 -- CREATE TABLE destinatarios_contatos (
 --   id_destinatario INT,
@@ -107,14 +112,6 @@ CREATE TABLE objetos_recebedores (
 --   FOREIGN KEY (id_destinatario) REFERENCES Destinatarios(id),
 --   FOREIGN KEY (id_endereco) REFERENCES Enderecos(id)
 -- );
-CREATE TABLE objetos_listas (
-  id_objeto INT,
-  id_lista INT,
-  posicao_objeto INT,
-  PRIMARY KEY (id_objeto, id_lista),
-  FOREIGN KEY (id_objeto) REFERENCES Objetos(id),
-  FOREIGN KEY (id_lista) REFERENCES Listas(id)
-);
 -- CREATE TABLE recebedores_enderecos (
 --   id_recebedor INT,
 --   id_endereco INT,
