@@ -28,3 +28,6 @@ ALTER TABLE Eventos RENAME COLUMN id_objetos TO id_objeto;
 ALTER TABLE Eventos DROP COLUMN momento_consulta;
 
 ALTER TABLE Recebedores ADD UNIQUE (cpf);
+
+DROP TABLE recebedores_contatos;
+DROP TABLE recebedores_enderecos;
