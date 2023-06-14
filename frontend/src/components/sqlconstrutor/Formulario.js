@@ -9,6 +9,7 @@ import insere_listas from './insere_listas';
 import select_id_listas from './select_id_listas';
 import associar_objetos_listas from './associar_objetos_listas';
 import insere_recebedores from './insere_recebedores';
+import insere_eventos from './insere_eventos';
 import './Formulario.css';
 
 class Formulario extends React.Component {
@@ -41,6 +42,7 @@ class Formulario extends React.Component {
       'select_id_listas': select_id_listas,
       'associar_objetos_listas': associar_objetos_listas,
       'insere_recebedores': insere_recebedores,
+      'insere_eventos': insere_eventos,
       // Adicione outras opções e métodos aqui se necessário
     };
   
@@ -89,6 +91,7 @@ class Formulario extends React.Component {
             <FormControlLabel value="insere_listas" control={<Radio />} label="Inserir novas listas" />
             <FormControlLabel value="associar_objetos_listas" control={<Radio />} label="Inserir associação entre objetos e listas" />
             <FormControlLabel value="insere_recebedores" control={<Radio />} label="Inserir recebedores" />
+            <FormControlLabel value="insere_eventos" control={<Radio />} label="Inserir eventos" />
             <FormControlLabel value="select_ids_objeto_servico" control={<Radio />} label="Extrair o id do objeto e do serviço" />
             <FormControlLabel value="select_id_listas" control={<Radio />} label="Extrair o id das listas" />
           </RadioGroup>
