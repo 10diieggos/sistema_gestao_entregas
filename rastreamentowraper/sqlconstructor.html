@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jquery370.js"></script>
+    <title>sqlconstructor</title>
+  </head>
+  <body>
+    <textarea id="colaraqui"></textarea>
+    <button onclick="copiar()">Copiar</button>
+  </body>
+  <script>
+    //script com a função copiar() que copia o conteúdo de todas as abas abertas no navegador que tenham o title 'Rastreamento Unificado' e cola ao final do
+    // conteudo do textarea de id 'colaraqui'
+
+    function copiar() {
+      // Itera pelas abas abertas no navegador
+      for (const tabId in window.top.window) {
+        console.log(tabId)
+  if (window.top.window.hasOwnProperty(tabId)) {
+    const tab = window.top.window[tabId];
+
+    // Seleciona todo o conteúdo da página
+    const content = tab.document.querySelector('html').innerHTML;
+
+    // Copia o conteúdo selecionado
+    navigator.clipboard.writeText(content);
+
+    // Cola o conteúdo copiado no final do conteúdo da página
+    tab.document.querySelector('body').innerHTML += content;
+  }
+}
+   }
+  </script>
+</html>

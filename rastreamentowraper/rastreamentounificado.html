@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rastreamento Unificado</title>
+  </head>
+  <body>
+    <h1 id="codigo"></h1>
+    <script>
+      function gerarCodigoAleatorio() {
+        var codigo = "";
+        var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        for (var i = 0; i < 13; i++) {
+          var indice = Math.floor(Math.random() * caracteres.length);
+          codigo += caracteres.charAt(indice);
+        }
+        return codigo.replace(/([A-Z]]{2})(\d{9})([A-Z]]{2})/, "$1-$2-$3");
+      }
+      document.getElementById("codigo").innerHTML = gerarCodigoAleatorio();
+    </script>
+  </body>
+</html>
