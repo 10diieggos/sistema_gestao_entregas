@@ -5,5 +5,5 @@ export default function insere_listas(inputText) {
     const dateTime = `${data} ${hora}`;
     return `('${dateTime}','${numero}','${modalidade}')`;
   });
-  return `INSERT INTO Listas (data_hora, numero, modalidade) VALUES ${values.join(',\n')}\nON DUPLICATE KEY UPDATE data_hora = VALUES(data_hora), modalidade = VALUES(modalidade);`;
+  return `INSERT INTO listas (data_hora, numero, modalidade) VALUES ${values.join(',\n')}\nON DUPLICATE KEY UPDATE data_hora = VALUES(data_hora), modalidade = VALUES(modalidade);`;
 }

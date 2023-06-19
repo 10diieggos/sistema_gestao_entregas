@@ -1,5 +1,5 @@
 export default function insere_servico(inputText) {
-  let query = "INSERT INTO Servicos\n (prazo_guarda_interna,\n admite_residuo,\n tentativas_externas_previstas,\n sigla,\n descricao,\n categoria,\n familia,\n gera_pre_alerta,\n hora_real_entrega,\n dados_do_recebedor_na_baixa,\n entrega_externa,\n entrega_com_imagem) VALUES\n";
+  let query = "INSERT INTO servicos\n (prazo_guarda_interna,\n admite_residuo,\n tentativas_externas_previstas,\n sigla,\n descricao,\n categoria,\n familia,\n gera_pre_alerta,\n hora_real_entrega,\n dados_do_recebedor_na_baixa,\n entrega_externa,\n entrega_com_imagem) VALUES\n";
 
   for (let linha of inputText.split("\n")) {
     if (linha.trim() === "") continue;

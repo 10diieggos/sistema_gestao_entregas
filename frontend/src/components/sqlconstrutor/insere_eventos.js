@@ -1,16 +1,16 @@
 
 
-var query = `INSERT INTO Eventos (id_objeto,data_hora,local,situacao,mensagem) VALUES`
+var query = `INSERT INTO eventos (id_objeto,data_hora,local,situacao,mensagem) VALUES`
 
 export default function insere_eventos(inputText) {
-  inputText = eliminarTextosQueNaoFazemParteDosConjuntosObjetoEventosELinhasVazias(inputText)
+  inputText = eliminarTextosQueNaoFazemParteDosConjuntosObjetoeventosELinhasVazias(inputText)
 
 
   let codigosArray = listarTodosOsCodigosEmUmArray(inputText);
 
-  let blocosObjetoEventos = separarCadaBlocoDeObjetoESeusEventosEmUmArray(inputText, codigosArray);
+  let blocosObjetoeventos = separarCadaBlocoDeObjetoESeuseventosEmUmArray(inputText, codigosArray);
 
-  let array_contendo_todos_os_arrays_de_eventos_de_objeto = blocosObjetoEventos.map(function (item) {
+  let array_contendo_todos_os_arrays_de_eventos_de_objeto = blocosObjetoeventos.map(function (item) {
     return item.split('\n').map(function (line) {
       return line.trim();
     });
@@ -20,7 +20,7 @@ export default function insere_eventos(inputText) {
 
     const codigo = codigosArray[index];
     let array_de_eventos_do_objeto = array_contendo_todos_os_arrays_de_eventos_de_objeto[index]
-    array_de_eventos_do_objeto = excluirArraysQueNaoSaoEventos(array_de_eventos_do_objeto)
+    array_de_eventos_do_objeto = excluirArraysQueNaoSaoeventos(array_de_eventos_do_objeto)
     montarQuery(array_de_eventos_do_objeto, codigo);
 
   }
@@ -34,7 +34,7 @@ export default function insere_eventos(inputText) {
   return query;
 }
 
-function eliminarTextosQueNaoFazemParteDosConjuntosObjetoEventosELinhasVazias(inputText) {
+function eliminarTextosQueNaoFazemParteDosConjuntosObjetoeventosELinhasVazias(inputText) {
   const eliminar = [
     /Imprimir\s+Nova.*?Voltar/sg,
     /SRO\s+.*?interno\./gs,
@@ -60,7 +60,7 @@ function listarTodosOsCodigosEmUmArray(texto) {
   return trechos;
 }
 
-function separarCadaBlocoDeObjetoESeusEventosEmUmArray(inputText, codigosArray) {
+function separarCadaBlocoDeObjetoESeuseventosEmUmArray(inputText, codigosArray) {
   const regex = new RegExp(`(${codigosArray.join('|')})\\s+((?:\\d{2}\\/){2}\\d{4}\\s+\\d{2}:\\d{2}:\\d{2}(?:\\s+\\S+)?)`, 'g');
   const matches = inputText.match(regex);
 
@@ -79,7 +79,7 @@ function separarCadaBlocoDeObjetoESeusEventosEmUmArray(inputText, codigosArray) 
   return result;
 }
 
-function excluirArraysQueNaoSaoEventos(array_de_eventos_do_objeto) {
+function excluirArraysQueNaoSaoeventos(array_de_eventos_do_objeto) {
   array_de_eventos_do_objeto.shift();
   array_de_eventos_do_objeto.shift();
   return array_de_eventos_do_objeto
@@ -93,7 +93,7 @@ function montarQuery(array_de_eventos_do_objeto, codigo) {
 
   arrays_de_dados_dos_eventos = juntarOarrayDeMensagemComSeuRespectivoArrayDeEvento(arrays_de_dados_dos_eventos)
 
-  arrays_de_dados_dos_eventos = analisarSeExisteDuplicacaodeDataHoraNosEventosDoObjetoEAcrescentarUmSegundoCasoNecessarioParaEvitarConflitosDeChavePrimaria(arrays_de_dados_dos_eventos)
+  arrays_de_dados_dos_eventos = analisarSeExisteDuplicacaodeDataHoraNoseventosDoObjetoEAcrescentarUmSegundoCasoNecessarioParaEvitarConflitosDeChavePrimaria(arrays_de_dados_dos_eventos)
 
   for (let i = 0; i < arrays_de_dados_dos_eventos.length; i++) {
     const line = arrays_de_dados_dos_eventos[i];
@@ -102,7 +102,7 @@ function montarQuery(array_de_eventos_do_objeto, codigo) {
     if (mensagem === undefined) {
       query += `
 (
-  (SELECT id FROM Objetos WHERE codigo = '${codigo}'),
+  (SELECT id FROM objetos WHERE codigo = '${codigo}'),
   '${converterAdataHoraParaOformatoSuportadoPeloMySql(data.trim())}',
   '${local.trim()}',
   '${situacao.trim()}',
@@ -111,7 +111,7 @@ function montarQuery(array_de_eventos_do_objeto, codigo) {
     } else {
       query += `
 (
-  (SELECT id FROM Objetos WHERE codigo = '${codigo}'),
+  (SELECT id FROM objetos WHERE codigo = '${codigo}'),
   '${converterAdataHoraParaOformatoSuportadoPeloMySql(data.trim())}',
   '${local.trim()}',
   '${situacao.trim()}',
@@ -132,7 +132,7 @@ function juntarOarrayDeMensagemComSeuRespectivoArrayDeEvento(input) {
   return output
 }
 
-function analisarSeExisteDuplicacaodeDataHoraNosEventosDoObjetoEAcrescentarUmSegundoCasoNecessarioParaEvitarConflitosDeChavePrimaria(arrays_de_dados_dos_eventos) {
+function analisarSeExisteDuplicacaodeDataHoraNoseventosDoObjetoEAcrescentarUmSegundoCasoNecessarioParaEvitarConflitosDeChavePrimaria(arrays_de_dados_dos_eventos) {
   let array_de_datas = [];
   for (let index = 0; index < arrays_de_dados_dos_eventos.length; index++) {
     const array_de_dados_do_evento = arrays_de_dados_dos_eventos[index];
