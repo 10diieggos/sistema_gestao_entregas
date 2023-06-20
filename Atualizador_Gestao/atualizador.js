@@ -2,6 +2,8 @@ $("#rastreamentCodes").change(function () {
   $('#buttons_div .button_link').remove()
 
   let rastreamentCodes = $("#rastreamentCodes").val().match(/[A-z]{2}\d{9}[A-z]{2}/gm)
+
+  rastreamentCodes = [...new Set(rastreamentCodes)]
   
   if (rastreamentCodes) {
       array_chunk(50, rastreamentCodes).forEach((codes, index) => {
