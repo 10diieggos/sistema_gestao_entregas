@@ -13,8 +13,8 @@ RUN pip3 install --no-cache-dir --upgrade pip && \
 # Copia o código fonte para o diretório de trabalho
 COPY . /app
 
-# Define as variáveis de ambiente
-ENV LANG pt_BR.UTF-8
+# Copia o arquivo .container.env para dentro do container e renomeia para .env
+COPY ./.container.env /app/.env
 
 # Expõe a porta 5000 do contêiner
 EXPOSE 5000

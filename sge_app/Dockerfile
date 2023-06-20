@@ -15,6 +15,9 @@ RUN npm install
 # Copie o restante dos arquivos da aplicação para o diretório de trabalho
 COPY . .
 
+# Copia o arquivo .container.env para dentro do container e renomeia para .env
+COPY ./.container.env /app/.env
+
 # Exponha a porta em que a aplicação será executada
 EXPOSE 3000
 
