@@ -59,3 +59,7 @@ ALTER TABLE contatos
   RENAME TO contatos;
 ALTER TABLE eventos
   RENAME TO eventos;
+
+ALTER TABLE objetos
+ADD finalizado TINYINT(1) DEFAULT NULL
+AFTER disponivel;

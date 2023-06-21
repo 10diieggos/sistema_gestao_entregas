@@ -27,6 +27,7 @@ CREATE TABLE objetos (
   duplicado TINYINT(1) DEFAULT 0,
   id_servico INT,
   disponivel TINYINT(1) DEFAULT NULL,
+  finalizado TINYINT(1) DEFAULT NULL,
   pendencia_baixa TINYINT(1) DEFAULT NULL,
   tentativas_restantes INT DEFAULT NULL,
   criado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
