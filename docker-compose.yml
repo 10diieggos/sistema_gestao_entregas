@@ -4,6 +4,7 @@ version: '3.8'
 services:
   db:
     image: mysql:8
+    container_name: sge_db
     env_file:
       - ./.db.env
     command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
@@ -17,6 +18,7 @@ services:
 
   sge_api:
     build: ./sge_api
+    container_name: sge_api
     command: python app.py
     ports:
       - "5000:5000"
@@ -29,6 +31,7 @@ services:
 
   sge_app:
     build: ./sge_app
+    container_name: sge_app
     command: npm start
     ports:
       - "3000:3000"
@@ -40,6 +43,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    container_name: sge_myadmin
     env_file:
       - ./.phpmyadmin.env
     environment:
