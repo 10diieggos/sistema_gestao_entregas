@@ -12,10 +12,8 @@ class Server():
         )
         
 
-    def run(self,):
-        self.app.run(
-            debug=True
-        )
+    def run(self,host, port, debug):
+        self.app.run(host, port, debug)
 
 
 server = Server()

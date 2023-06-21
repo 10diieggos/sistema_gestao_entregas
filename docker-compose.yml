@@ -19,7 +19,7 @@ services:
   sge_api:
     build: ./sge_api
     container_name: sge_api
-    command: python app.py
+    command: gunicorn --bind 0.0.0.0:5000 wsgi:app
     ports:
       - "5000:5000"
     depends_on:
