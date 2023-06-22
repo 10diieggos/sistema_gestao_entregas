@@ -1,15 +1,18 @@
 FROM python:3.11.3
 
+# Instala o pipenv
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir pipenv
+
 # Define o diretório de trabalho
 WORKDIR /app
 
-# Copia o arquivo de dependências para o diretório de trabalho
-COPY ./requirements.txt /app/requirements.txt
+# Copia o Pipfile e o Pipfile.lock para o diretório de trabalho
+COPY ./Pipfile /app/Pipfile
+COPY ./Pipfile.lock /app/Pipfile.lock
 
-# Instala as dependências do Python
-RUN pip3 install --no-cache-dir --upgrade pip && \
-    pip3 install --no-cache-dir -r requirements.txt \
-    pip install gunicorn
+# Instala as dependências do Python usando o pipenv
+RUN pipenv install --system --deploy
 
 # Copia o código fonte para o diretório de trabalho
 COPY . /app
