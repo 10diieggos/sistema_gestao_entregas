@@ -24,7 +24,7 @@ services:
       - db
     networks:
       - sge_api_network
-    # restart: always
+    restart: always
 
 
   sge_app:
