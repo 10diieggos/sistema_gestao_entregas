@@ -11,7 +11,7 @@ app, api = server.app, server.api
 
 # Define a rota '/listas' e aplica o modelo aos dados retornados pela função
 @api.route('/atendimento')
-class ListasResource(Resource):
+class Atendimento(Resource):
     @api.marshal_with(atendimento_model, envelope='data')
     def get(self):
         # Cria uma conexão com o banco de dados
@@ -29,11 +29,11 @@ class ListasResource(Resource):
                 'codigo': row.codigo,
                 'ordem': row.ordem,
                 'lista': row.lista,
-                'pos': row.pos,
-                'dest': row.dest,
-                'end': row.end,
-                'num': row.num,
-                'hora': row.hora.isoformat(),
+                'posicao_objeto': row.posicao_objeto,
+                'destinatario': row.destinatario,
+                'endereco': row.endereco,
+                'num_endereco': row.num_endereco,
+                'data_hora': row.data_hora.isoformat(),
                 'local': row.local,
                 'situacao': row.situacao,
             }
