@@ -20,11 +20,11 @@ CREATE TABLE objetos (
   id INT PRIMARY KEY AUTO_INCREMENT,
   codigo CHAR(13) NOT NULL,
   ordem INT DEFAULT NULL,
-  destinatario VARCHAR(100) NOT NULL,
+  destinatario VARCHAR(100) DEFAULT NULL,
   endereco VARCHAR(100) DEFAULT NULL,
   num_endereco INT DEFAULT NULL,
   distribuicao ENUM('E', 'I')  DEFAULT 'I',
-  duplicado TINYINT(1) DEFAULT 0,
+  duplicado TINYINT(1) DEFAULT NULL,
   id_servico INT,
   disponivel TINYINT(1) DEFAULT NULL,
   finalizado TINYINT(1) DEFAULT NULL,
@@ -88,6 +88,21 @@ CREATE TABLE eventos (
   mensagem VARCHAR(200) DEFAULT NULL,
   PRIMARY KEY (id_objeto, data_hora),
   FOREIGN KEY (id_objeto) REFERENCES objetos(id)
+);
+CREATE TABLE simples (
+  id_objeto INT PRIMARY KEY AUTO_INCREMENT,
+  codigo CHAR(13) DEFAULT NULL,
+  ordem INT DEFAULT NULL,
+  lista INT DEFAULT NULL,
+  posicao_objeto INT DEFAULT NULL,
+  destinatario VARCHAR(100) NOT NULL,
+  endereco VARCHAR(100) DEFAULT NULL,
+  num_endereco INT DEFAULT NULL,
+  disponivel TINYINT(1) DEFAULT NULL,
+  data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  local VARCHAR(100) DEFAULT NULL,
+  situacao CHAR(8) DEFAULT NULL,
+  atualizado TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 -- CREATE TABLE Destinatarios (
 --   id INT PRIMARY KEY AUTO_INCREMENT,
