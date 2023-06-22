@@ -25,7 +25,7 @@ CREATE TABLE objetos (
   num_endereco INT DEFAULT NULL,
   distribuicao ENUM('E', 'I')  DEFAULT 'I',
   duplicado TINYINT(1) DEFAULT NULL,
-  id_servico INT,
+  id_servico INT NOT NULL,
   disponivel TINYINT(1) DEFAULT NULL,
   finalizado TINYINT(1) DEFAULT NULL,
   pendencia_baixa TINYINT(1) DEFAULT NULL,
@@ -45,24 +45,24 @@ CREATE TABLE listas (
   UNIQUE (numero)
 );
 CREATE TABLE objetos_listas (
-  id_objeto INT,
-  id_lista INT,
-  posicao_objeto INT,
+  id_objeto INT NOT NULL,
+  id_lista INT NOT NULL,
+  posicao_objeto INT NOT NULL,
   PRIMARY KEY (id_objeto, id_lista),
   FOREIGN KEY (id_objeto) REFERENCES objetos(id),
   FOREIGN KEY (id_lista) REFERENCES listas(id)
 );
 CREATE TABLE recebedores (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  cpf CHAR(11),
+  cpf CHAR(11) NOT NULL,
   nome VARCHAR(100) NOT NULL,
   criado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   atualizado TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   UNIQUE (cpf)
 );
 CREATE TABLE objetos_recebedores (
-  id_objeto INT,
-  id_recebedor INT,
+  id_objeto INT NOT NULL,
+  id_recebedor INT NOT NULL,
   formal TINYINT(1) DEFAULT NULL,
   PRIMARY KEY (id_objeto, id_recebedor),
   FOREIGN KEY (id_objeto) REFERENCES objetos(id),
@@ -70,19 +70,19 @@ CREATE TABLE objetos_recebedores (
 );
 CREATE TABLE contatos (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  telefone CHAR(11),
+  telefone CHAR(11) NOT NULL,
   UNIQUE (telefone)
 );
 CREATE TABLE objetos_contatos (
-  id_objeto INT,
-  id_contato INT,
+  id_objeto INT NOT NULL,
+  id_contato INT NOT NULL,
   PRIMARY KEY (id_objeto, id_contato),
   FOREIGN KEY (id_objeto) REFERENCES objetos(id),
   FOREIGN KEY (id_contato) REFERENCES contatos(id)
 );
 CREATE TABLE eventos (
-  id_objeto INT,
-  data_hora DATETIME,
+  id_objeto INT NOT NULL,
+  data_hora DATETIME NOT NULL,
   local VARCHAR(100) DEFAULT NULL,
   situacao VARCHAR(100) DEFAULT NULL,
   mensagem VARCHAR(200) DEFAULT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE simples (
   ordem INT DEFAULT NULL,
   lista INT DEFAULT NULL,
   posicao_objeto INT DEFAULT NULL,
-  destinatario VARCHAR(100) NOT NULL,
+  destinatario VARCHAR(100) DEFAULT NULL,
   endereco VARCHAR(100) DEFAULT NULL,
   num_endereco INT DEFAULT NULL,
   disponivel TINYINT(1) DEFAULT NULL,
