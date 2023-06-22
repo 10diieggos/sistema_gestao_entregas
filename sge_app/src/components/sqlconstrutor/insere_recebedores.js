@@ -7,7 +7,7 @@ export default function insere_recebedores(dados) {
   let query_objetos_recebedores = 'INSERT INTO objetos_recebedores (id_objeto, id_recebedor, formal)\nVALUES\n';
   let query_contatos = 'INSERT INTO contatos (telefone)\nVALUES\n';
   let query_objetos_contatos = 'INSERT INTO objetos_contatos (id_objeto, id_contato)\nVALUES\n';
-  let query_update_objetos = 'UPDATE objetos SET disponivel = 0, pendencia_baixa = 1 WHERE codigo IN (\n';
+  let query_update_objetos = 'UPDATE objetos SET disponivel = 0, pendencia_baixa = 1, finalizado = 1 WHERE codigo IN (\n';
 
   for (const linha of linhas) {
     const [codigo, cpf, nome, telefone = '', formal = 1] = linha.trim().split('\t');
