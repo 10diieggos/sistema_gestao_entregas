@@ -10,5 +10,5 @@ export default function insere_servico(inputText) {
     query += "(" + valores + "),\n";
   }
 
-  return query.slice(0, -2) + "ON DUPLICATE KEY UPDATE prazo_guarda_interna = VALUES(prazo_guarda_interna), admite_residuo = VALUES(admite_residuo), tentativas_externas_previstas = VALUES(tentativas_externas_previstas), sigla = VALUES(sigla), descricao = VALUES(descricao), categoria = VALUES(categoria), familia = VALUES(familia), gera_pre_alerta = VALUES(gera_pre_alerta), hora_real_entrega = VALUES(hora_real_entrega), dados_do_recebedor_na_baixa = VALUES(dados_do_recebedor_na_baixa), entrega_externa = VALUES(entrega_externa), entrega_com_imagem = VALUES(entrega_com_imagem);";
+  return query.slice(0, -2) + `\nON DUPLICATE KEY UPDATE prazo_guarda_interna = VALUES(prazo_guarda_interna),\nadmite_residuo = VALUES(admite_residuo),\ntentativas_externas_previstas = VALUES(tentativas_externas_previstas),\nsigla = VALUES(sigla),\ndescricao = VALUES(descricao),\ncategoria = VALUES(categoria),\nfamilia = VALUES(familia),\ngera_pre_alerta = VALUES(gera_pre_alerta),\nhora_real_entrega = VALUES(hora_real_entrega),\ndados_do_recebedor_na_baixa = VALUES(dados_do_recebedor_na_baixa),\nentrega_externa = VALUES(entrega_externa),\nentrega_com_imagem = VALUES(entrega_com_imagem);`;
 }
