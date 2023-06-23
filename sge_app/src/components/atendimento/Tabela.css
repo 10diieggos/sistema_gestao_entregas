@@ -1,0 +1,29 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: auto;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-image: linear-gradient(to bottom, rgba(0, 178, 234, 0.05) 0%, 24.54943984413054%, rgba(0, 131, 177, 0.05) 51.33950316609839%, 73.94057476863128%, rgba(0, 84, 121, 0.05) 100%);
+}
+
+tr:nth-child(odd) {
+  background-image: linear-gradient(to bottom, rgba(255, 209, 50, 0.05) 0%, 26.741354115927912%, rgba(221, 171, 0, 0.05) 53.482708231855824%, 76.74135411592792%, rgba(198, 133, 0, 0.05) 100%);
+}
+
+th {
+  background-color: #0378A6;
+  color: white;
+}
+
+thead {
+  position: sticky;
+  top: 2rem;
+}
