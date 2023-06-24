@@ -5,8 +5,8 @@ services:
   scripts:
     build: ./scripts
     container_name: scripts
-    environment:
-      - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
+    env_file:
+      - ./scripts/.env.docker.host
     volumes:
       - ./sge_app/.env.production:/app/.env.production
     restart: "no"
