@@ -1,5 +1,3 @@
-# local deste arquivo: ./frontend/Dockerfile
-
 # Use a imagem oficial do Node.js como base
 FROM node:18.16.0
 
@@ -15,11 +13,11 @@ RUN npm install
 # Copie o restante dos arquivos da aplicação para o diretório de trabalho
 COPY . .
 
-# Copia o arquivo .container.env para dentro do container e renomeia para .env
-COPY ./.container.env /app/.env
+# Crie uma versão de produção do aplicativo
+RUN npm run build
 
 # Exponha a porta em que a aplicação será executada
 EXPOSE 3000
 
-# Inicie a aplicação
-CMD ["npm", "start"]
+# Inicie a aplicação em modo de produção usando o script personalizado start:prod
+CMD ["npm", "run", "start:prod"]

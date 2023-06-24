@@ -9,12 +9,7 @@ load_dotenv()
 class Server():
     def __init__(self,):
         self.app = Flask(__name__)
-        allowed_origins = os.getenv('ALLOWED_ORIGINS')
-        if allowed_origins:
-            allowed_origins = allowed_origins.split(',')
-        else:
-            allowed_origins = '*'
-        CORS(self.app, origins=allowed_origins)
+        CORS(self.app)
         self.api = Api(
             self.app,
             version='1.0',
