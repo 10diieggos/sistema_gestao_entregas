@@ -5,10 +5,11 @@ import moment from 'moment';
 import './Tabela.css';
 
 function Tabela() {
+  const api_host = process.env.REACT_APP_API_HOST;
   const [data, setData] = useState([]);
-
+  console.log(api_host);
   useEffect(() => {
-    const options = { method: 'GET', url: 'http://localhost:5000/atendimento' };
+    const options = { method: 'GET', url: `http://${api_host}/api/atendimento` };
     axios.request(options).then(function (response) {
       setData(response.data.data);
     }).catch(function (error) {
