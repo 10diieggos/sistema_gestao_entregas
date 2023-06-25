@@ -1,17 +1,27 @@
 #!/bin/bash
 
 # 1 Define a variável de ambiente HOST_IP_ADDRESS
-export HOST_IP_ADDRESS=$(hostname -I | awk '{print $1}')
+HOST_IP_ADDRESS=$(hostname -I | awk '{print $1}')
+export HOST_IP_ADDRESS
 
-cd ~/sge
+cd ~/sge || exit
 
-# 2 Atualiza a variável de ambiente HOST_IP_ADDRESS em sge_app/.env.production
-docker-compose up -d --no-deps --build scripts
+# 1.1 Cria uma cópia temporária do arquivo sge_app/.env.production
+cp sge_app/.env.production sge_app/.env.production.bak
 
-# Aguarda até que o contêiner do serviço scripts pare de ser executado
-while [ $(docker-compose ps | grep scripts | grep -c "Up") -eq 1 ]; do
+# 2 Atualiza a variável de ambiente em sge_app/.env.production
+sed -i "s/^REACT_APP_API_HOST=.*/REACT_APP_API_HOST=$HOST_IP_ADDRESS/" sge_app/.env.production
+
+# Garante a configuração das variáveis
+while ! grep -q "^REACT_APP_API_HOST=$HOST_IP_ADDRESS" sge_app/.env.production; do
     sleep 1
 done
 
-# 3 Inicializa o SGE (exceto o serviço scripts)
-docker-compose up -d --build $(docker-compose config --services | grep -v scripts)
+# 3 Inicializa o SGE
+docker-compose up -d --build
+
+# Aguarda a conclusão do comando docker-compose
+wait $!
+
+# 4 Restaura o conteúdo original do arquivo sge_app/.env.production
+mv sge_app/.env.production.bak sge_app/.env.production
