@@ -9,13 +9,13 @@ function Tabela() {
   const [data, setData] = useState([]);
   console.log(api_host);
   useEffect(() => {
-    const options = { method: 'GET', url: `http://${api_host}/api/atendimento` };
+    const options = { method: 'GET', url: `http://${api_host}/atendimento` };
     axios.request(options).then(function (response) {
       setData(response.data.data);
     }).catch(function (error) {
       console.error(error);
     });
-  }, []);
+  }, [api_host]);
 
   const columns = React.useMemo(
     () => [
