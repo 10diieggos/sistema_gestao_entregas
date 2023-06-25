@@ -2,15 +2,6 @@
 version: '3.8'
 
 services:
-  scripts:
-    build: ./scripts
-    container_name: scripts
-    env_file:
-      - ./scripts/.env.docker.host
-    volumes:
-      - ./sge_app/.env.production:/app/.env.production
-    restart: "no"
-
   db:
     image: mysql:8
     container_name: sge_db
@@ -41,7 +32,6 @@ services:
     container_name: sge_app
     env_file:
       - ./sge_app/.env.production
-    # command: npm start
     networks:
       - sge_app_network
       - sge_api_network
