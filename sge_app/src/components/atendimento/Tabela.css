@@ -27,3 +27,24 @@ thead {
   position: sticky;
   top: 2rem;
 }
+
+.input-de-celulas {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.coluna-ordem {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.coluna-lista {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.coluna-item {
+  white-space: nowrap;
+  text-align: left;
+}

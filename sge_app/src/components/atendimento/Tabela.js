@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { useTable, useSortBy } from 'react-table';
+import { useTable, useSortBy, useFilters } from 'react-table';
 import moment from 'moment';
 import './Tabela.css';
+import ColumnHeader from './ColumnHeader.js';
 
 function Tabela() {
   const api_host = process.env.REACT_APP_API_HOST;
   const [data, setData] = useState([]);
-  console.log(api_host);
   useEffect(() => {
     const options = { method: 'GET', url: `http://${api_host}/atendimento` };
     axios.request(options).then(function (response) {
@@ -34,6 +34,9 @@ function Tabela() {
       {
         Header: 'Ordem',
         accessor: 'ordem',
+        Cell: ({ value }) => {
+          return <div className="coluna-ordem">{value}</div>;
+        },
         sortType: (rowA, rowB, columnId, desc) => {
           if (rowA.original.ordem === null) return desc ? -1 : 1;
           if (rowB.original.ordem === null) return desc ? 1 : -1;
@@ -44,7 +47,7 @@ function Tabela() {
         Header: 'Lista',
         accessor: 'lista',
         Cell: ({ value }) => {
-          return <div style={{ textAlign: 'center' }}>{value}</div>;
+          return <div  className="coluna-lista">{value}</div>;
         },
         sortType: (rowA, rowB, columnId, desc) => {
           if (rowA.original.lista === null) return desc ? -1 : 1;
@@ -56,7 +59,7 @@ function Tabela() {
         Header: 'Item',
         accessor: 'posicao_objeto',
         Cell: ({ value }) => {
-          return <div style={{ textAlign: 'left' }}>{value}</div>;
+          return <div  className="coluna-item">{value}</div>;
         },
         sortType: (rowA, rowB, columnId, desc) => {
           if (rowA.original.posicao_objeto === null) return desc ? -1 : 1;
@@ -80,24 +83,47 @@ function Tabela() {
         Header: 'Destinatário',
         accessor: 'destinatario',
         Cell: ({ value, row }) => {
+          const inputRef = useRef(null);
+          const measureRef = useRef(null);
+      
+          useEffect(() => {
+            if (inputRef.current && measureRef.current) {
+              inputRef.current.style.width = `${measureRef.current.offsetWidth + 2}px`;
+            }
+          }, [value]);
+      
           return (
-            <input
-              style={{ textAlign: 'left' }}
-              value={value}
-              onChange={event => {
-                const novoValor = event.target.value;
-                setData(prevData => {
-                  // Cria uma cópia do array de dados
-                  const newData = [...prevData];
-                  // Atualiza o objeto na linha atual
-                  newData[row.index] = {
-                    ...newData[row.index],
-                    destinatario: novoValor,
-                  };
-                  return newData;
-                });
-              }}
-            />
+            <>
+              <input
+                ref={inputRef}
+                className="input-de-celulas"
+                style={{ textAlign: 'left' }}
+                value={value}
+                onChange={event => {
+                  const novoValor = event.target.value;
+                  setData(prevData => {
+                    // Cria uma cópia do array de dados
+                    const newData = [...prevData];
+                    // Atualiza o objeto na linha atual
+                    newData[row.index] = {
+                      ...newData[row.index],
+                      destinatario: novoValor,
+                    };
+                    return newData;
+                  });
+                }}
+              />
+              <span
+                style={{
+                  visibility: 'hidden',
+                  whiteSpace: 'pre',
+                  position: 'absolute',
+                }}
+                ref={measureRef}
+              >
+                {value}
+              </span>
+            </>
           );
         },
         sortType: (rowA, rowB, columnId, desc) => {
@@ -110,24 +136,47 @@ function Tabela() {
         Header: 'Endereço',
         accessor: 'endereco',
         Cell: ({ value, row }) => {
+          const inputRef = useRef(null);
+          const measureRef = useRef(null);
+      
+          useEffect(() => {
+            if (inputRef.current && measureRef.current) {
+              inputRef.current.style.width = `${measureRef.current.offsetWidth + 2}px`;
+            }
+          }, [value]);
+      
           return (
-            <input
-              style={{ textAlign: 'left' }}
-              value={value}
-              onChange={event => {
-                const novoValor = event.target.value;
-                setData(prevData => {
-                  // Cria uma cópia do array de dados
-                  const newData = [...prevData];
-                  // Atualiza o objeto na linha atual
-                  newData[row.index] = {
-                    ...newData[row.index],
-                    endereco: novoValor,
-                  };
-                  return newData;
-                });
-              }}
-            />
+            <>
+              <input
+                ref={inputRef}
+                className="input-de-celulas"
+                style={{ textAlign: 'left' }}
+                value={value}
+                onChange={event => {
+                  const novoValor = event.target.value;
+                  setData(prevData => {
+                    // Cria uma cópia do array de dados
+                    const newData = [...prevData];
+                    // Atualiza o objeto na linha atual
+                    newData[row.index] = {
+                      ...newData[row.index],
+                      endereco: novoValor,
+                    };
+                    return newData;
+                  });
+                }}
+              />
+              <span
+                style={{
+                  visibility: 'hidden',
+                  whiteSpace: 'pre',
+                  position: 'absolute',
+                }}
+                ref={measureRef}
+              >
+                {value}
+              </span>
+            </>
           );
         },
         sortType: (rowA, rowB, columnId, desc) => {
@@ -140,30 +189,53 @@ function Tabela() {
         Header: 'Número',
         accessor: 'num_endereco',
         Cell: ({ value, row }) => {
+          const inputRef = useRef(null);
+          const measureRef = useRef(null);
+      
+          useEffect(() => {
+            if (inputRef.current && measureRef.current) {
+              inputRef.current.style.width = `${measureRef.current.offsetWidth + 2}px`;
+            }
+          }, [value]);
+      
           return (
-            <input
-              style={{ textAlign: 'left' }}
-              value={value}
-              onChange={event => {
-                const novoValor = event.target.value;
-                setData(prevData => {
-                  // Cria uma cópia do array de dados
-                  const newData = [...prevData];
-                  // Atualiza o objeto na linha atual
-                  newData[row.index] = {
-                    ...newData[row.index],
-                    num_endereco: novoValor,
-                  };
-                  return newData;
-                });
-              }}
-            />
+            <>
+              <input
+                ref={inputRef}
+                className="input-de-celulas"
+                style={{ textAlign: 'left' }}
+                value={value}
+                onChange={event => {
+                  const novoValor = event.target.value;
+                  setData(prevData => {
+                    // Cria uma cópia do array de dados
+                    const newData = [...prevData];
+                    // Atualiza o objeto na linha atual
+                    newData[row.index] = {
+                      ...newData[row.index],
+                      num_endereco: novoValor,
+                    };
+                    return newData;
+                  });
+                }}
+              />
+              <span
+                style={{
+                  visibility: 'hidden',
+                  whiteSpace: 'pre',
+                  position: 'absolute',
+                }}
+                ref={measureRef}
+              >
+                {value}
+              </span>
+            </>
           );
         },
         sortType: (rowA, rowB, columnId, desc) => {
           if (rowA.original.num_endereco === null) return desc ? -1 : 1;
           if (rowB.original.num_endereco === null) return desc ? 1 : -1;
-          return rowA.original.num_endereco - rowB.original.num_endereco;
+          return rowA.original.endereco.localeCompare(rowB.original.endereco);
         },
       },
       {
@@ -193,6 +265,7 @@ function Tabela() {
 
   const tableInstance = useTable(
     { columns, data },
+    useFilters,
     useSortBy
   );
 
@@ -202,6 +275,7 @@ function Tabela() {
     headerGroups,
     rows,
     prepareRow,
+    setAllFilters,
   } = tableInstance;
 
   return (
@@ -214,25 +288,24 @@ function Tabela() {
                       backgroundColor: 'white',
                     }}>
             ATENDIMENTO
-        </caption>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? ' 🔽'
-                        : ' 🔼'
-                      : ''}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
+      </caption>
+
+      <thead>
+        <tr>
+          <th colSpan={columns.length}>
+            <button onClick={() => setAllFilters([])}>Limpar Filtros</button>
+            {/* Adicione outros botões aqui */}
+          </th>
+        </tr>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <ColumnHeader column={column} headerGroup={headerGroup} />
+            ))}
+          </tr>
+        ))}
+      </thead>
+
         <tbody {...getTableBodyProps()}>
           {rows.map(row => {
             prepareRow(row);
