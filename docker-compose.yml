@@ -48,6 +48,20 @@ services:
     networks:
       - sge_api_network
     restart: always
+  
+  adminer:
+    image: adminer
+    environment:
+      ADMINER_DESIGN: galkaev
+      ADMINER_DEFAULT_SERVER: db
+      ADMINER_PLUGINS: 'tables-filter tinymce'
+    ports:
+      - 8080:8080
+    networks:
+      - sge_api_network
+    restart: always
+  
+      
 
   sge_nginx:
     build: ./nginx
