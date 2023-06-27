@@ -1,7 +1,7 @@
 from flask_restx import fields
 from src.server.instance import server
 
-servicos_model = server.api.model('ServicosModel', {
+servicos_flask_restx_model = server.api.model('ServicosModel', {
     'id': fields.Integer,
     'prazo_guarda_interna': fields.Integer,
     'admite_residuo': fields.Boolean,
@@ -19,7 +19,7 @@ servicos_model = server.api.model('ServicosModel', {
     'atualizado': fields.DateTime(dt_format='iso8601'),
 })
 
-objetos_model = server.api.model('ObjetosModel', {
+objetos_flask_restx_model = server.api.model('ObjetosModel', {
     'id': fields.Integer,
     'codigo': fields.String,
     'ordem': fields.Integer,
@@ -38,7 +38,7 @@ objetos_model = server.api.model('ObjetosModel', {
     'atualizado': fields.DateTime(dt_format='iso8601'),
 })
 
-listas_model = server.api.model('ListasModel', {
+listas_flask_restx_model = server.api.model('ListasModel', {
     'id': fields.Integer,
     'data_Hora': fields.DateTime(dt_format='iso8601'),
     'numero': fields.String,
@@ -47,13 +47,13 @@ listas_model = server.api.model('ListasModel', {
     'atualizado': fields.DateTime(dt_format='iso8601'),
 })
 
-objetos_listas_model = server.api.model('ObjetosListasModel', {
+objetos_listas_flask_restx_model = server.api.model('ObjetosListasModel', {
     'id_objeto': fields.Integer,
     'id_lista': fields.Integer,
     'posicao_objeto': fields.Integer
 })
 
-recebedores_model = server.api.model('RecebedoresModel', {
+recebedores_flask_restx_model = server.api.model('RecebedoresModel', {
     'id': fields.Integer,
     'cpf': fields.String,
     'nome': fields.String,
@@ -61,23 +61,23 @@ recebedores_model = server.api.model('RecebedoresModel', {
     'atualizado': fields.DateTime(dt_format='iso8601')
 })
 
-objetos_recebedores_model = server.api.model('ObjetosRecebedoresModel', {
+objetos_recebedores_flask_restx_model = server.api.model('ObjetosRecebedoresModel', {
     'id_objeto': fields.Integer,
     'id_recebedor': fields.Integer,
     'formal': fields.Boolean
 })
 
-contatos_model = server.api.model('ContatosModel', {
+contatos_flask_restx_model = server.api.model('ContatosModel', {
     'id': fields.Integer,
     'telefone': fields.String
 })
 
-objetos_contatos_model = server.api.model('ObjetosContatosModel', {
+objetos_contatos_flask_restx_model = server.api.model('ObjetosContatosModel', {
     'id_objeto': fields.Integer,
     'id_contato': fields.Integer
 })
 
-eventos_model = server.api.model('EventosModel', {
+eventos_flask_restx_model = server.api.model('EventosModel', {
     'id_objeto' :fields.Integer,
     'data_hora' :fields.DateTime(dt_format='iso8601'),
     'local' :fields.String,
@@ -85,7 +85,7 @@ eventos_model = server.api.model('EventosModel', {
     'mensagem' :fields.String
 })
 
-simples_model = server.api.model('SimplesModel', {
+simples_flask_restx_model = server.api.model('SimplesModel', {
     'id_objeto': fields.Integer,
     'codigo': fields.String,
     'ordem': fields.Integer,

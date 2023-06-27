@@ -11,6 +11,7 @@ import associar_objetos_listas from './associar_objetos_listas';
 import insere_recebedores from './insere_recebedores';
 import insere_eventos from './insere_eventos';
 import inserir_simples from './inserir_simples';
+import api_insere_servico from './api_insere_servico';
 import './Formulario.css';
 
 class Formulario extends React.Component {
@@ -45,11 +46,12 @@ class Formulario extends React.Component {
       'insere_recebedores': insere_recebedores,
       'insere_eventos': insere_eventos,
       'inserir_simples': inserir_simples,
+      'api_insere_servico': api_insere_servico,
       // Adicione outras opções e métodos aqui se necessário
     };
-  
+
     const selectedMethod = optionMethods[this.state.selectedOption];
-  
+
     if (!selectedMethod) {
       // Exibir mensagem de erro e limpar o conteúdo do textarea
       this.setState({
@@ -59,16 +61,25 @@ class Formulario extends React.Component {
       });
       return;
     }
-  
-    const treatedValue = selectedMethod(inputText);
-  
-    // Limpar a mensagem de erro, se houver, e atualizar o estado do inputText e do outputText
-    this.setState({
-      inputText: inputText,
-      outputText: treatedValue,
-      error: '',
-    });
-    navigator.clipboard.writeText(this.state.outputText);
+
+    if (this.state.selectedOption === 'api_insere_servico') {
+      selectedMethod(inputText, (response) => {
+        this.setState({
+          inputText: inputText,
+          outputText: response,
+          error: '',
+        });
+      });
+    } else {
+      const treatedValue = selectedMethod(inputText);
+
+      // Limpar a mensagem de erro, se houver, e atualizar o estado do inputText e do outputText
+      this.setState({
+        inputText: inputText,
+        outputText: treatedValue,
+        error: '',
+      });
+    }
   }
 
   handleCopyClick(event) {
@@ -97,6 +108,7 @@ class Formulario extends React.Component {
             <FormControlLabel value="inserir_simples" control={<Radio />} label="Inserir objetos simples" />
             <FormControlLabel value="select_ids_objeto_servico" control={<Radio />} label="Extrair o id do objeto e do serviço" />
             <FormControlLabel value="select_id_listas" control={<Radio />} label="Extrair o id das listas" />
+            <FormControlLabel value="api_insere_servico" control={<Radio />} label="Inserir servico via API" />
           </RadioGroup>
         </FormControl>
 
