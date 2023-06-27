@@ -2,7 +2,7 @@ from flask_restx import Resource
 from sqlalchemy import text
 
 from src.server.instance import server
-from src.models.listas import listas_model
+from src.models.sge_models import listas_model
 from src.database.sge import db
 
 app, api = server.app, server.api
