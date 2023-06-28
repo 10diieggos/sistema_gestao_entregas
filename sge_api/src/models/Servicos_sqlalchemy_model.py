@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy.sql import func
 from src.database.sge import db
 
 class Servicos_sqlalchemy_model(db.Model):
@@ -16,24 +17,11 @@ class Servicos_sqlalchemy_model(db.Model):
     dados_do_recebedor_na_baixa = Column(String)
     entrega_externa = Column(Boolean)
     entrega_com_imagem = Column(Boolean)
-    criado = Column(DateTime)
-    atualizado = Column(DateTime)
+    criado = Column(DateTime, default=func.now())
+    atualizado = Column(DateTime, default=func.now(), onupdate=func.now())
 
     def to_dict(self):
-        return {
-            'id': self.id,
-            'prazo_guarda_interna': self.prazo_guarda_interna,
-            'admite_residuo': self.admite_residuo,
-            'tentativas_externas_previstas': self.tentativas_externas_previstas,
-            'sigla': self.sigla,
-            'descricao': self.descricao,
-            'categoria': self.categoria,
-            'familia': self.familia,
-            'gera_pre_alerta': self.gera_pre_alerta,
-            'hora_real_entrega': self.hora_real_entrega,
-            'dados_do_recebedor_na_baixa': self.dados_do_recebedor_na_baixa,
-            'entrega_externa': self.entrega_externa,
-            'entrega_com_imagem': self.entrega_com_imagem,
-            'criado': self.criado,
-            'atualizado': self.atualizado
-        }
+        dicionario = {}
+        for coluna in self.__table__.columns:
+            dicionario[coluna.name] = getattr(self, coluna.name)
+        return dicionario

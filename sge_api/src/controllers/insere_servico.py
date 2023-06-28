@@ -5,7 +5,7 @@ from sqlalchemy import text, exists
 from src.server.instance import server
 from src.database.sge import db
 from src.models.flask_restx_models import servicos_flask_restx_model
-from src.models.sqlalchemy_models import Servicos_sqlalchemy_model
+from src.models.Servicos_sqlalchemy_model import Servicos_sqlalchemy_model
 import json
 from datetime import datetime
 
@@ -45,8 +45,6 @@ class InsereServico(Resource):
                     'dados_do_recebedor_na_baixa': values[9],
                     'entrega_externa': bool(int(values[10])),
                     'entrega_com_imagem': bool(int(values[11])),
-                    'criado': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                    'atualizado': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 })
         db.session.bulk_insert_mappings(Servicos_sqlalchemy_model, data)
         db.session.commit()
