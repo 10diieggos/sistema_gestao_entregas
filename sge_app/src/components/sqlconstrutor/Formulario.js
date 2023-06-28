@@ -12,6 +12,7 @@ import insere_recebedores from './insere_recebedores';
 import insere_eventos from './insere_eventos';
 import inserir_simples from './inserir_simples';
 import api_insere_servico from './api_insere_servico';
+import api_insere_objeto from './api_insere_objeto';
 import './Formulario.css';
 
 class Formulario extends React.Component {
@@ -47,6 +48,7 @@ class Formulario extends React.Component {
       'insere_eventos': insere_eventos,
       'inserir_simples': inserir_simples,
       'api_insere_servico': api_insere_servico,
+      'api_insere_objeto': api_insere_objeto,
       // Adicione outras opções e métodos aqui se necessário
     };
 
@@ -62,7 +64,14 @@ class Formulario extends React.Component {
       return;
     }
 
-    if (this.state.selectedOption === 'api_insere_servico') {
+    const apiInsertOptions = [
+      'api_insere_servico',
+      'api_insere_objeto'
+    ];
+    
+    const isApiInsert = apiInsertOptions.includes(this.state.selectedOption);
+    
+    if (isApiInsert) {
       selectedMethod(inputText, (response) => {
         this.setState({
           inputText: inputText,
@@ -109,6 +118,7 @@ class Formulario extends React.Component {
             <FormControlLabel value="select_ids_objeto_servico" control={<Radio />} label="Extrair o id do objeto e do serviço" />
             <FormControlLabel value="select_id_listas" control={<Radio />} label="Extrair o id das listas" />
             <FormControlLabel value="api_insere_servico" control={<Radio />} label="Inserir servico via API" />
+            <FormControlLabel value="api_insere_objeto" control={<Radio />} label="Inserir objeto via API" />
           </RadioGroup>
         </FormControl>
 
