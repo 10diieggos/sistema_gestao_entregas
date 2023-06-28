@@ -26,6 +26,7 @@ class Formulario extends React.Component {
     this.handleRadioChange = this.handleRadioChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCopyClick = this.handleCopyClick.bind(this);
+    this.handleResetClick = this.handleResetClick.bind(this);
   }
 
   handleRadioChange(event) {
@@ -97,32 +98,62 @@ class Formulario extends React.Component {
     navigator.clipboard.writeText(this.state.outputText);
   }
 
+  handleResetClick(event) {
+    event.preventDefault();
+  
+    this.setState({
+      selectedOption: '',
+      inputText: '',
+      outputText: '',
+      error: '',
+    });
+  }
+
   render() {
     return (
       <div className="form-container">
         <FormControl className="form-control">
           <FormLabel id="demo-radio-buttons-group-label">Escolha a operação desejada</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            name="radio-buttons-group"
-            value={this.state.selectedOption}
-            onChange={this.handleRadioChange}
-          >
-            <FormControlLabel value="insere_servico" control={<Radio />} label="Inserir novo servico" />
-            <FormControlLabel value="insere_novos_objetos" control={<Radio />} label="Inserir novos objetos" />
-            <FormControlLabel value="insere_listas" control={<Radio />} label="Inserir novas listas" />
-            <FormControlLabel value="associar_objetos_listas" control={<Radio />} label="Inserir associação entre objetos e listas" />
-            <FormControlLabel value="insere_recebedores" control={<Radio />} label="Inserir recebedores" />
-            <FormControlLabel value="insere_eventos" control={<Radio />} label="Inserir eventos" />
-            <FormControlLabel value="inserir_simples" control={<Radio />} label="Inserir objetos simples" />
-            <FormControlLabel value="select_ids_objeto_servico" control={<Radio />} label="Extrair o id do objeto e do serviço" />
-            <FormControlLabel value="select_id_listas" control={<Radio />} label="Extrair o id das listas" />
-            <FormControlLabel value="api_insere_servico" control={<Radio />} label="Inserir servico via API" />
-            <FormControlLabel value="api_insere_objeto" control={<Radio />} label="Inserir objeto via API" />
-          </RadioGroup>
+          <div className="radio-group-container">
+            <fieldset className="radio-group-fieldset">
+              <legend className="radio-group-legend">Via API</legend>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                name="radio-buttons-group"
+                value={this.state.selectedOption}
+                onChange={this.handleRadioChange}
+              >
+                <FormControlLabel value="api_insere_servico" control={<Radio />} label="Inserir servico" />
+                <FormControlLabel value="api_insere_objeto" control={<Radio />} label="Inserir objeto" />
+              </RadioGroup>
+            </fieldset>
+            <fieldset className="radio-group-fieldset">
+              <legend className="radio-group-legend">Gerar SQL</legend>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                name="radio-buttons-group"
+                value={this.state.selectedOption}
+                onChange={this.handleRadioChange}
+              >
+                <FormControlLabel value="insere_servico" control={<Radio />} label="Inserir serviço" />
+                <FormControlLabel value="insere_novos_objetos" control={<Radio />} label="Inserir novos objetos" />
+                <FormControlLabel value="insere_listas" control={<Radio />} label="Inserir listas" />
+                <FormControlLabel value="associar_objetos_listas" control={<Radio />} label="Associar objetos a listas" />
+                <FormControlLabel value="insere_recebedores" control={<Radio />} label="Inserir recebedores" />
+                <FormControlLabel value="insere_eventos" control={<Radio />} label="Inserir eventos" />
+                <FormControlLabel value="inserir_simples" control={<Radio />} label="Inserir simples" />
+              </RadioGroup>
+            </fieldset>
+            <fieldset className="radio-group-fieldset">
+              <legend className="radio-group-legend">Ações</legend>
+              <div className="button-column">
+                <Button variant="outlined" size="small" onClick={this.handleResetClick}>Nova Operação</Button>
+                <Button variant="outlined" size="small" onClick={this.handleCopyClick}>Copiar</Button>
+              </div>
+            </fieldset>
+          </div>
         </FormControl>
 
-        {this.state.outputText && <Button className="btn" variant="contained" onClick={this.handleCopyClick}>Copiar resultado</Button>}
         {this.state.error &&
           <Alert severity="warning" variant='filled'>
             <AlertTitle>Atenção</AlertTitle>
@@ -132,7 +163,7 @@ class Formulario extends React.Component {
         <TextareaAutosize 
           className="textarea"
           minRows={10} 
-          maxRows="20"
+          maxRows={20}
           value={this.state.inputText}
           onChange={this.handleInputChange}
           placeholder="Insira o texto aqui..."
@@ -141,13 +172,11 @@ class Formulario extends React.Component {
         <TextareaAutosize 
           className="textarea output-textarea"
           minRows={10} 
-          maxRows="20"
+          maxRows={20}
           value={this.state.outputText}
           readOnly
           placeholder="Resultado..."
         />
-
-          
       </div>
     );
   }

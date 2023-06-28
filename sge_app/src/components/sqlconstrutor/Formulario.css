@@ -1,4 +1,3 @@
-/* caminho relativo deste arquivo: frontend/src/components/sqlconstrutor/Formulario.css */
 .form-container {
   display: flex;
   flex-direction: column;
@@ -9,6 +8,30 @@
 
 .form-control {
   margin-bottom: 20px;
+}
+
+.radio-group-container {
+  display: flex;
+}
+
+.radio-group-fieldset {
+  flex: 1;
+  border: 1px solid #ccc;
+  margin: 0 10px;
+  padding: 10px;
+}
+
+.radio-group-legend {
+  text-align: center;
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-column > button {
+  margin-bottom: 10px;
 }
 
 .textarea {
