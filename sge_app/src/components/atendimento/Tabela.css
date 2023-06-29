@@ -7,7 +7,7 @@ table {
 th,
 td {
   text-align: left;
-  padding: 8px;
+  padding: 0px;
 }
 
 tr:nth-child(even) {
@@ -34,6 +34,11 @@ thead {
   background-color: transparent;
 }
 
+.coluna-rastreamento{
+  white-space: nowrap;
+  text-align: right;
+}
+
 .coluna-ordem {
   white-space: nowrap;
   text-align: right;
@@ -46,5 +51,5 @@ thead {
 
 .coluna-item {
   white-space: nowrap;
-  text-align: left;
+  text-align: center;
 }

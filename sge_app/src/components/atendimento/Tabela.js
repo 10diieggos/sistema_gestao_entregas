@@ -23,7 +23,7 @@ function Tabela() {
         Header: 'Rastreamento',
         accessor: 'codigo',
         Cell: ({ value }) => {
-          return <div style={{ textAlign: 'center' }}>{value}</div>;
+          return <div className="coluna-rastreamento">{value}</div>;
         },
         sortType: (rowA, rowB, columnId, desc) => {
           if (rowA.original.codigo === null) return desc ? -1 : 1;
