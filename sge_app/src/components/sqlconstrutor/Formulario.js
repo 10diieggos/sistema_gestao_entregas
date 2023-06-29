@@ -13,6 +13,7 @@ import insere_eventos from './insere_eventos';
 import inserir_simples from './inserir_simples';
 import api_insere_servico from './api_insere_servico';
 import api_insere_objeto from './api_insere_objeto';
+import api_insere_lista from './api_insere_lista';
 import './Formulario.css';
 
 class Formulario extends React.Component {
@@ -50,6 +51,7 @@ class Formulario extends React.Component {
       'inserir_simples': inserir_simples,
       'api_insere_servico': api_insere_servico,
       'api_insere_objeto': api_insere_objeto,
+      'api_insere_lista': api_insere_lista,
       // Adicione outras opções e métodos aqui se necessário
     };
 
@@ -67,7 +69,8 @@ class Formulario extends React.Component {
 
     const apiInsertOptions = [
       'api_insere_servico',
-      'api_insere_objeto'
+      'api_insere_objeto',
+      'api_insere_lista'
     ];
     
     const isApiInsert = apiInsertOptions.includes(this.state.selectedOption);
@@ -113,7 +116,7 @@ class Formulario extends React.Component {
     return (
       <div className="form-container">
         <FormControl className="form-control">
-          <FormLabel id="demo-radio-buttons-group-label">Escolha a operação desejada</FormLabel>
+        <h3 className="form-label" id="demo-radio-buttons-group-label">Escolha a operação desejada</h3>
           <div className="radio-group-container">
             <fieldset className="radio-group-fieldset">
               <legend className="radio-group-legend">Via API</legend>
@@ -125,6 +128,7 @@ class Formulario extends React.Component {
               >
                 <FormControlLabel value="api_insere_servico" control={<Radio />} label="Inserir servico" />
                 <FormControlLabel value="api_insere_objeto" control={<Radio />} label="Inserir objeto" />
+                <FormControlLabel value="api_insere_lista" control={<Radio />} label="Inserir lista" />
               </RadioGroup>
             </fieldset>
             <fieldset className="radio-group-fieldset">
@@ -138,7 +142,7 @@ class Formulario extends React.Component {
                 <FormControlLabel value="insere_servico" control={<Radio />} label="Inserir serviço" />
                 <FormControlLabel value="insere_novos_objetos" control={<Radio />} label="Inserir novos objetos" />
                 <FormControlLabel value="insere_listas" control={<Radio />} label="Inserir listas" />
-                <FormControlLabel value="associar_objetos_listas" control={<Radio />} label="Associar objetos a listas" />
+                <FormControlLabel value="associar_objetos_listas" control={<Radio />} label="Associar objetos/listas" />
                 <FormControlLabel value="insere_recebedores" control={<Radio />} label="Inserir recebedores" />
                 <FormControlLabel value="insere_eventos" control={<Radio />} label="Inserir eventos" />
                 <FormControlLabel value="inserir_simples" control={<Radio />} label="Inserir simples" />
@@ -160,23 +164,25 @@ class Formulario extends React.Component {
             {this.state.error}
           </Alert>}      
         
-        <TextareaAutosize 
-          className="textarea"
-          minRows={10} 
-          maxRows={20}
-          value={this.state.inputText}
-          onChange={this.handleInputChange}
-          placeholder="Insira o texto aqui..."
-        />     
-          
-        <TextareaAutosize 
-          className="textarea output-textarea"
-          minRows={10} 
-          maxRows={20}
-          value={this.state.outputText}
-          readOnly
-          placeholder="Resultado..."
-        />
+          <div className="textarea-container">
+            <TextareaAutosize 
+              className="textarea"
+              minRows={10} 
+              rows={this.state.inputText.split('\n').length}
+              value={this.state.inputText}
+              onChange={this.handleInputChange}
+              placeholder="Insira o texto aqui..."
+            />     
+                
+            <TextareaAutosize 
+              className="textarea output-textarea"
+              minRows={10} 
+              rows={this.state.inputText.split('\n').length}
+              value={this.state.outputText}
+              readOnly
+              placeholder="Resultado..."
+            />
+          </div>
       </div>
     );
   }

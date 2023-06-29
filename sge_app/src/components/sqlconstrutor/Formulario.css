@@ -10,12 +10,16 @@
   margin-bottom: 20px;
 }
 
+.form-label {
+  text-align: center;
+  color: #1976d2;
+}
+
 .radio-group-container {
   display: flex;
 }
 
 .radio-group-fieldset {
-  flex: 1;
   border: 1px solid #ccc;
   margin: 0 10px;
   padding: 10px;
@@ -34,8 +38,24 @@
   margin-bottom: 10px;
 }
 
-.textarea {
+.output-textarea {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.btn {
+  margin-top: 20px;
+}
+
+.textarea-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
   width: 100%;
+}
+
+.textarea {
+  flex: 1;
   padding: 10px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -44,11 +64,14 @@
   resize: vertical;
 }
 
-.output-textarea {
-  background-color: #f9f9f9;
-  color: #333;
+.textarea:first-child {
+  margin-left: 30px;
+  margin-right: 8px;
+
 }
 
-.btn {
-  margin-top: 20px;
+.output-textarea {
+  margin-left: 8px;
+  margin-right: 30px;
+
 }
