@@ -40,7 +40,7 @@ objetos_flask_restx_model = server.api.model('ObjetosModel', {
 
 listas_flask_restx_model = server.api.model('ListasModel', {
     'id': fields.Integer,
-    'data_Hora': fields.DateTime(dt_format='iso8601'),
+    'data_hora_lancamento': fields.DateTime(dt_format='iso8601'),
     'numero': fields.String,
     'modalidade': fields.String,
     'criado': fields.DateTime(dt_format='iso8601'),
@@ -78,11 +78,11 @@ objetos_contatos_flask_restx_model = server.api.model('ObjetosContatosModel', {
 })
 
 eventos_flask_restx_model = server.api.model('EventosModel', {
-    'id_objeto' :fields.Integer,
-    'data_hora' :fields.DateTime(dt_format='iso8601'),
-    'local' :fields.String,
-    'situacao' :fields.String,
-    'mensagem' :fields.String
+    'id_objeto': fields.Integer,
+    'data_hora': fields.DateTime(dt_format='iso8601'),
+    'local': fields.String,
+    'situacao': fields.String,
+    'mensagem': fields.String
 })
 
 simples_flask_restx_model = server.api.model('SimplesModel', {

@@ -25,7 +25,7 @@ class ListasResource(Resource):
         for row in result:
             lista = {
                 'id': row.id,
-                'data_Hora': row.data_Hora.isoformat(),
+                'data_hora_lancamento': row.data_hora_lancamento.isoformat(),
                 'numero': row.numero,
                 'modalidade': row.modalidade,
                 'criado': row.criado.isoformat(),
