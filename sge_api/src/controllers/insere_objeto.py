@@ -25,15 +25,23 @@ class InsereObjeto(Resource):
         rows = input_data.split('\n')
         data = []
         registros_inseridos = []
+        registros_duplicados = []
+        servicos_nao_cadastrados = []
         for row in rows:
             if row:
                 values = row.split('\t')
                 codigo = values[0]
-                if db.session.query(exists().where(Objetos_sqlalchemy_model.codigo == codigo)).scalar():
+                sigla = codigo[:2]
+                registro_duplicado = db.session.query(exists().where(Objetos_sqlalchemy_model.codigo == codigo)).scalar()
+                servico_cadastrado = db.session.query(exists().where(Servicos_sqlalchemy_model.sigla == sigla)).scalar()
+                if registro_duplicado:
+                    registros_duplicados.append(codigo)
+                    continue
+                if not servico_cadastrado:
+                    servicos_nao_cadastrados.append(sigla)
                     continue
                 registros_inseridos.append(codigo)
                 distribuicao = values[5].strip()
-                sigla = codigo[:2]
                 id_servico = db.session.query(Servicos_sqlalchemy_model.id).filter(Servicos_sqlalchemy_model.sigla == sigla).scalar()
                 if distribuicao == 'I':
                     tentativas_restantes = 0
@@ -54,7 +62,13 @@ class InsereObjeto(Resource):
         db.session.commit()
 
         # Consulta os registros no banco de dados onde a codigo está presente na lista registros_inseridos
-        registros = db.session.query(Objetos_sqlalchemy_model).filter(Objetos_sqlalchemy_model.codigo.in_(registros_inseridos)).all()
-        registros = [registro.to_dict() for registro in registros]
+        registros_inseridos = db.session.query(Objetos_sqlalchemy_model).filter(Objetos_sqlalchemy_model.codigo.in_(registros_inseridos)).all()
+        registros_duplicados = db.session.query(Objetos_sqlalchemy_model).filter(Objetos_sqlalchemy_model.codigo.in_(registros_duplicados)).all()
+        registros_inseridos = [registro.to_dict() for registro in registros_inseridos]
+        registros_duplicados = [registro.to_dict() for registro in registros_duplicados]
         
-        return json.dumps({'registros': registros}, default=datetime_handler)
+        return json.dumps({
+            'registros_inseridos': registros_inseridos, 
+            'registros_duplicados': registros_duplicados, 
+            'servicos_nao_cadastrados': servicos_nao_cadastrados
+            }, default=datetime_handler)
