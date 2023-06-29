@@ -2,17 +2,16 @@ from flask_restx import Resource
 from sqlalchemy import text
 
 from src.server.instance import server
-from src.models.sge_models import listas_model
+from src.models.flask_restx_models import listas_flask_restx_model
 from src.database.sge import db
 
 app, api = server.app, server.api
 
 
-
 # Define a rota '/listas' e aplica o modelo aos dados retornados pela função
 @api.route('/listas')
 class ListasResource(Resource):
-    @api.marshal_with(listas_model, envelope='data')
+    @api.marshal_with(listas_flask_restx_model, envelope='data')
     def get(self):
         # Cria uma conexão com o banco de dados
         conn = db.engine.connect()
