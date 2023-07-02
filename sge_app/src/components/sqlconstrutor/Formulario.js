@@ -14,6 +14,7 @@ import inserir_simples from './inserir_simples';
 import api_insere_servico from './api_insere_servico';
 import api_insere_objeto from './api_insere_objeto';
 import api_insere_lista from './api_insere_lista';
+import api_insere_evento from './api_insere_evento';
 import './Formulario.css';
 
 class Formulario extends React.Component {
@@ -52,6 +53,7 @@ class Formulario extends React.Component {
       'api_insere_servico': api_insere_servico,
       'api_insere_objeto': api_insere_objeto,
       'api_insere_lista': api_insere_lista,
+      'api_insere_evento': api_insere_evento,
       // Adicione outras opções e métodos aqui se necessário
     };
 
@@ -70,7 +72,8 @@ class Formulario extends React.Component {
     const apiInsertOptions = [
       'api_insere_servico',
       'api_insere_objeto',
-      'api_insere_lista'
+      'api_insere_lista',
+      'api_insere_evento'
     ];
     
     const isApiInsert = apiInsertOptions.includes(this.state.selectedOption);
@@ -129,6 +132,7 @@ class Formulario extends React.Component {
                 <FormControlLabel value="api_insere_servico" control={<Radio />} label="Inserir servico" />
                 <FormControlLabel value="api_insere_objeto" control={<Radio />} label="Inserir objeto" />
                 <FormControlLabel value="api_insere_lista" control={<Radio />} label="Inserir lista" />
+                <FormControlLabel value="api_insere_evento" control={<Radio />} label="Inserir evento" />
               </RadioGroup>
             </fieldset>
             <fieldset className="radio-group-fieldset">

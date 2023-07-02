@@ -4,3 +4,4 @@ from src.controllers import devolucao
 from src.controllers import insere_servico
 from src.controllers import insere_objeto
 from src.controllers import insere_lista
+from src.controllers import insere_evento

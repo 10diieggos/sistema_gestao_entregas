@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, String, Enum, DateTime, ForeignKey, Boolean
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+from .Eventos_sqlalchemy_model import Eventos_sqlalchemy_model
 from src.database.sge import db
 
 class Objetos_sqlalchemy_model(db.Model):
@@ -20,7 +22,7 @@ class Objetos_sqlalchemy_model(db.Model):
     data_hora_real_entrega = Column(DateTime)
     criado = Column(DateTime, default=func.now())
     atualizado = Column(DateTime, default=func.now(), onupdate=func.now())
-
+    eventos = relationship("Eventos_sqlalchemy_model", back_populates="objeto")
 
     def to_dict(self):
         dicionario = {}
