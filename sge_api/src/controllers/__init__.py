@@ -5,3 +5,4 @@ from src.controllers import insere_servico
 from src.controllers import insere_objeto
 from src.controllers import insere_lista
 from src.controllers import insere_evento
+from src.controllers import insere_objetosXlistas
