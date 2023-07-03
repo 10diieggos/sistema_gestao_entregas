@@ -30,7 +30,6 @@ CREATE TABLE objetos (
   finalizado TINYINT(1) DEFAULT NULL,
   pendencia_baixa TINYINT(1) DEFAULT NULL,
   tentativas_restantes INT DEFAULT NULL,
-  data_hora_real_entrega DATETIME DEFAULT NULL,
   criado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   atualizado TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   UNIQUE (codigo),
@@ -65,6 +64,7 @@ CREATE TABLE objetos_recebedores (
   id_objeto INT NOT NULL,
   id_recebedor INT NOT NULL,
   formal TINYINT(1) DEFAULT NULL,
+  data_hora_real_entrega DATETIME DEFAULT NULL,
   PRIMARY KEY (id_objeto, id_recebedor),
   FOREIGN KEY (id_objeto) REFERENCES objetos(id),
   FOREIGN KEY (id_recebedor) REFERENCES recebedores(id)
