@@ -1,0 +1,19 @@
+# npm
+node_modules
+package-lock.json
+
+# Logs
+*.log
+
+# Cache
+*.gz
+
+# Coveralls
+.nyc_output
+coverage
+
+# Benchmarking
+benchmarks/graphs
+
+#environment
+.env.*

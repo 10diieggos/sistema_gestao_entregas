@@ -13,6 +13,13 @@ app, api = server.app, server.api
 
 import re
 
+def remove_duplicatas(lista):
+    l = []
+    for i in lista:
+        if i not in l:
+            l.append(i)
+    return l
+
 class DadosDeEventos:
     def __init__(self, inputText):
         self.inputText = inputText
@@ -53,6 +60,7 @@ class DadosDeEventos:
         self.espaco_removidos ='\n'.join(linhas)
         self.texto_no_fluxo = self.espaco_removidos
     
+    
     def run(self):
         self.desnecessarias()
         self.vazias()
@@ -72,7 +80,8 @@ class DadosDeEventos:
 
     def find_codigos(self):
       pattern = re.compile(r'[A-Z]{2}\d{9}[A-Z]{2}')
-      codigos = pattern.findall(self.inputText)
+      codigos = pattern.findall(self.texto_no_fluxo)
+      codigos = remove_duplicatas(codigos)
       self.codigos = codigos
 
     def remove_as_linhas_com_codigo_e_data_de_rastreamento_separa_blocos(self):
@@ -80,7 +89,7 @@ class DadosDeEventos:
         blocos_de_eventos = [bloco.split('\n', 1)[-1] for bloco in blocos_de_eventos]
         if blocos_de_eventos and blocos_de_eventos[0] == '':
             blocos_de_eventos.pop(0)
-        self.blocos_de_eventos = blocos_de_eventos
+        self.blocos_de_eventos = remove_duplicatas(blocos_de_eventos)
     
     def ajustar_as_linhas_com_mensagem_com_os_dados_do_evento(self):
       new_blocos_de_eventos = []
@@ -183,6 +192,7 @@ class InsereEvento(Resource):
             'Fale com os Correios'
         ])
         eventos.run()
+        # print(eventos.blocos_de_eventos)
         blocos_de_eventos = eventos.blocos_de_eventos
         objetos_nao_cadastrados = eventos.objetos_nao_cadastrados
         data = []
@@ -203,6 +213,7 @@ class InsereEvento(Resource):
                         mensagem = None
                     if mensagem == '':
                         mensagem = None
+                    print(id_objeto, data_hora)
                     duplicado = db.session.query(exists().where(and_(Eventos_sqlalchemy_model.id_objeto == id_objeto, Eventos_sqlalchemy_model.data_hora == data_hora))).scalar()
                     if duplicado:
                         registros_duplicados.append(f'{codigo}\t{data_hora}\t{situacao}\n')

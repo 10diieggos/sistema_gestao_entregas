@@ -19,7 +19,6 @@ class Objetos_sqlalchemy_model(db.Model):
     finalizado = Column(Boolean)
     pendencia_baixa = Column(Boolean)
     tentativas_restantes = Column(Integer)
-    data_hora_real_entrega = Column(DateTime)
     criado = Column(DateTime, default=func.now())
     atualizado = Column(DateTime, default=func.now(), onupdate=func.now())
     eventos = relationship("Eventos_sqlalchemy_model", back_populates="objeto")

@@ -17,9 +17,11 @@ services:
     restart: always
 
   sge_api:
-    build: ./sge_api
+    build: ./sge_node_api
     container_name: sge_api
-    command: gunicorn --bind 0.0.0.0:5000 wsgi:app
+    environment:
+      - NODE_ENV=production
+    command: npm run start:prod
     depends_on:
       - db
     networks:
@@ -55,8 +57,6 @@ services:
       ADMINER_DESIGN: galkaev
       ADMINER_DEFAULT_SERVER: db
       ADMINER_PLUGINS: 'tables-filter tinymce'
-    ports:
-      - 8080:8080
     networks:
       - sge_api_network
     restart: always

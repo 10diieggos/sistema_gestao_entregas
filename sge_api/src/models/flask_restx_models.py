@@ -33,7 +33,6 @@ objetos_flask_restx_model = server.api.model('ObjetosModel', {
     'finalizado': fields.Boolean,
     'pendencia_baixa': fields.Boolean,
     'tentativas_restantes': fields.Integer,
-    'data_hora_real_entrega': fields.DateTime(dt_format='iso8601'),
     'criado': fields.DateTime(dt_format='iso8601'),
     'atualizado': fields.DateTime(dt_format='iso8601'),
 })
@@ -64,7 +63,8 @@ recebedores_flask_restx_model = server.api.model('RecebedoresModel', {
 objetos_recebedores_flask_restx_model = server.api.model('ObjetosRecebedoresModel', {
     'id_objeto': fields.Integer,
     'id_recebedor': fields.Integer,
-    'formal': fields.Boolean
+    'formal': fields.Boolean,
+    'data_hora_real_entrega': fields.DateTime(dt_format='iso8601')
 })
 
 contatos_flask_restx_model = server.api.model('ContatosModel', {

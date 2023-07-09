@@ -1,57 +1,60 @@
-export default function insere_recebedores(dados) {
-  let lines = dados.trim().split('\n');
-  let recebedores = [];
-  let objetos_recebedores = [];
-  let contatos = [];
-  let objetos_contatos = [];
-  let objetos = [];
-
-  for (let line of lines) {
-      let [data_hora_real_entrega, codigo, cpf, nome, telefone, formal] = line.split('\t');
-      recebedores.push(`('${cpf}', '${nome}')`);
-      objetos_recebedores.push(`((SELECT id FROM objetos WHERE codigo = '${codigo}'), (SELECT id FROM recebedores WHERE cpf = '${cpf}'), ${formal})`);
-      if (telefone) {
-          contatos.push(`('${telefone}')`);
-          objetos_contatos.push(`((SELECT id FROM objetos WHERE codigo = '${codigo}'), (SELECT id FROM contatos WHERE telefone = '${telefone}'))`);
-      }
-      objetos.push(`WHEN '${codigo}' THEN '${data_hora_real_entrega}'`);
-  }
-
-  let query_recebedores = `INSERT INTO recebedores (cpf, nome)
+export default function insere_recebedores(inputText) {
+    // Dividir o texto de entrada em linhas
+    const lines = inputText.trim().split('\n');
+    // Remover a primeira linha (cabeçalho)
+    lines.shift();
+    // Inicializar variáveis para armazenar os valores a serem inseridos nas tabelas
+    let recebedoresValues = [];
+    let objetosRecebedoresValues = [];
+    let contatosValues = [];
+    let objetosContatosValues = [];
+    let objetosUpdateValues = [];
+    // Iterar sobre cada linha do texto de entrada
+    for (const line of lines) {
+        // Dividir a linha em colunas
+        const columns = line.split('\t');
+        // Extrair os valores das colunas
+        const [hora, codigo, cpf, nome, telefone, formal] = columns;
+        // Adicionar os valores às variáveis de armazenamento
+        recebedoresValues.push(`('${cpf}','${nome}')`);
+        objetosRecebedoresValues.push(`((SELECT id FROM objetos WHERE codigo = '${codigo}'), (SELECT id FROM recebedores WHERE cpf = '${cpf}'), ${formal}, '${hora}')`);
+        if (telefone) {
+            contatosValues.push(`('${telefone}')`);
+            objetosContatosValues.push(`((SELECT id FROM objetos WHERE codigo = '${codigo}'), (SELECT id FROM contatos WHERE telefone = '${telefone}'))`);
+        }
+        if (!objetosUpdateValues.includes(codigo)) {
+            objetosUpdateValues.push(`'${codigo}'`);
+        }
+    }
+    // Construir a consulta
+    let query = `INSERT INTO recebedores (cpf, nome)
 VALUES
-  ${recebedores.join(',\n    ')}
+    ${recebedoresValues.join(',\n\t')}
 ON DUPLICATE KEY UPDATE nome = VALUES(nome);
 
-INSERT INTO objetos_recebedores (id_objeto, id_recebedor, formal)
+INSERT INTO objetos_recebedores (id_objeto, id_recebedor, formal, data_hora_real_entrega)
 VALUES
-  ${objetos_recebedores.join(',\n    ')}
+    ${objetosRecebedoresValues.join(',\n\t')}
 ON DUPLICATE KEY UPDATE formal = VALUES(formal);`;
-
-  if (contatos.length > 0) {
-      query_recebedores += `
+    if (contatosValues.length > 0) {
+        query += `
 
 INSERT INTO contatos (telefone)
 VALUES
-  ${contatos.join(',\n    ')}
+    ${contatosValues.join(',\n\t')}
 ON DUPLICATE KEY UPDATE telefone = VALUES(telefone);
 
 INSERT INTO objetos_contatos (id_objeto, id_contato)
 VALUES
-  ${objetos_contatos.join(',\n    ')}
+    ${objetosContatosValues.join(',\n\t')}
 ON DUPLICATE KEY UPDATE id_contato = VALUES(id_contato);`;
-  }
-
-  query_recebedores += `
+    }
+    query += `
 
 UPDATE objetos
 SET disponivel = 0,
-  pendencia_baixa = 1,
-  finalizado = 1,
-  data_hora_real_entrega = CASE codigo
-      ${objetos.join('\n        ')}
-  END
+  finalizado = 1
 WHERE codigo IN (
-  ${lines.map(line => `'${line.split('\t')[1]}'`).join(',\n    ')});`;
-
-  return query_recebedores;
+    ${objetosUpdateValues.join(',\n\t')});`;
+    return query;
 }

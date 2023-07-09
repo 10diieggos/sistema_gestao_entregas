@@ -16,12 +16,12 @@ function App() {
         <div className={`sidebar ${menuOpen ? 'open' : ''}`}>
           <ul className="menu">
             <li>
-              <Link to="/sqlconstrutor" onClick={() => setMenuOpen(false)}>
+              <Link to="/sge/sqlconstrutor" onClick={() => setMenuOpen(false)}>
                 SQL Construtor
               </Link>
             </li>
             <li>
-              <Link to="/sge/atendimento" onClick={() => setMenuOpen(false)}>
+              <Link to="/atendimento" onClick={() => setMenuOpen(false)}>
                 Atendimento
               </Link>
             </li>
@@ -29,8 +29,8 @@ function App() {
         </div>
         <div className="content">
           <Switch>
-            <Route exact path="/sqlconstrutor" component={SqlConstrutor} />
-            <Route exact path="/sge/atendimento" component={Atendimento} />
+            <Route exact path="/sge/sqlconstrutor" component={SqlConstrutor} />
+            <Route exact path="/atendimento" component={Atendimento} />
           </Switch>
         </div>
       </div>
